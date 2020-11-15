@@ -1,0 +1,11 @@
+html
+  head
+    link(rel='stylesheet', href='/stylesheets/login.css')
+    div(class="login-block")
+      h2 Login
+      form(action = "/login" method = "POST")
+      h4 Username
+      input(name = "username" type = "text" required)
+      h4 Password
+      input(name = "password" type = "password" required)
+      button(type = "Submit") Login
