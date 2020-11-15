@@ -6,7 +6,7 @@ var user_controller = require('../controllers/userController');
 
 //login page route
 router.get('/', function (req, res) {
-  res.send('Login page');
+  res.render('login');
 })
 
 //spotify redirect potentially
