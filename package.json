@@ -10,6 +10,7 @@
   "dependencies": {
     "cookie-parser": "^1.4.5",
     "debug": "file:node_modules/debug",
+    "email-validator": "^2.0.4",
     "express": "^4.16.4",
     "http-errors": "^1.6.3",
     "jade": "^1.11.0",

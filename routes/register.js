@@ -10,11 +10,9 @@ router.get('/', function (req, res) {
 });
 
 // GET request for creating a new user account
-router.get('/createAccount', user_controller.user_create_get);
+// router.get('/createAccount', user_controller.user_create_get);
 // POST request for creating a new user account
 router.post('/createAccount', user_controller.user_create_post);
 
 //spotify redirect potentially
-
-
 module.exports = router;
