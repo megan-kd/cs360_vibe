@@ -1,0 +1,25 @@
+html
+  head
+    link(rel='stylesheet', href='/stylesheets/login.css')
+  header
+    a(href='/login') Login
+  div(class="register-block")
+    h2 Create An Account
+    form(action = "/register" method = "POST")
+    h4 First Name
+    input(name = "first-name" type = "text" required)
+    h4 Last Name
+    input(name = "last-name" type = "text" required)
+    h4 New Password
+    input(name = "new-password" type = "password" required)
+    h4 Confirm Password
+    input(name = "confirm-password" type = "password" required)
+    h4 New Username
+    input(name = "new-username" type = "text" required)
+    h4 Email
+    input(name = "email" type = "text" required)
+    h3 Optional:
+    a(href='https://www.spotify.com/us/')
+      div("spotify-image")
+        img(src='/images/connect-with-spotify-logo.png')
+    button(type = "Submit") Register
