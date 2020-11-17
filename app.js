@@ -11,6 +11,17 @@ var registerRouter = require('./routes/register')
 
 var app = express();
 
+
+var mongoose = require('mongoose');
+
+var mongoDB = "mongodb+srv://EthanHunter:emasters4e@cluster0.hkqs2.mongodb.net/vibe_project?retryWrites=true&w=majority";
+mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+
+var db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
