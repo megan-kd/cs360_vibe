@@ -16,7 +16,8 @@ exports.user_create_post = function (req, res){
   // if missing any credentials  
   var message = " "
   if(!req.body.confirmpassword || !req.body.newpassword || !req.body.newusername || 
-    !req.body.firstname || !req.body.lastname || !req.body.email) {
+    !req.body.firstname || !req.body.lastname || !req.body.email || !req.body.securityanswer
+    || !req.body.securityquestion) {
     message = "Missing required field. Account not created."
     res.render('register', {message:message});
   } 
@@ -51,12 +52,12 @@ exports.user_create_post = function (req, res){
       }
       else {
         var newUser = new User({username: req.body.newusername, password: req.body.newpassword,
-          email: req.body.email});
+          email: req.body.email, securityQuestionPrompt: req.body.securityquestion,
+          securityQuestionAnswer: req.body.securityanswer});
 
         db.collection("User").insertOne(newUser, function(err, res) {
           if (err) throw err;
-          console.log("new user created called " + req.body.newusername);
-          db.close();
+        db.close();
         });
         
         res.render('register', {message:"Account Created! Go ahead and login"});
