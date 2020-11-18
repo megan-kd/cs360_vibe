@@ -9,8 +9,6 @@ router.get('/', function (req, res) {
   res.render('register');
 });
 
-// GET request for creating a new user account
-// router.get('/createAccount', user_controller.user_create_get);
 // POST request for creating a new user account
 router.post('/createAccount', user_controller.user_create_post);
 
