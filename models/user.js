@@ -12,9 +12,11 @@ var UserSchema = new Schema(
     SpotifyPassword: {type: String},
     addedSongToday: {type: Boolean},
     LikeSongs: [{type: Schema.Types.ObjectId, ref: 'Song'}],
-    securtiyQuestionPrompt : {type: String},
-    securtiyQuestionAnswer : {type: String},
-    email : {type: String}
+    securityQuestionPrompt : {type: String},
+    securityQuestionAnswer : {type: String},
+    email : {type: String},
+    firstName: {type: String},
+    lastName: {type: String}
   }
 );
 
