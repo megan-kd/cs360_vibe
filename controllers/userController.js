@@ -1,6 +1,15 @@
+
 var User = require('../models/user');
 var validator = require("email-validator");
-var regexPassword = new RegExp("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$");
+var regexPassword = new RegExp('^(?=.*[A-Za-z])(?=.*?[0-9]).{8,}$');
+
+var mongoose = require('mongoose');
+var mongoDB = "mongodb+srv://EthanHunter:emasters4e@cluster0.hkqs2.mongodb.net/vibe_project?retryWrites=true&w=majority";
+mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.Promise = global.Promise;
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 
 // add a new user to the database from post
 exports.user_create_post = function (req, res){
@@ -14,7 +23,8 @@ exports.user_create_post = function (req, res){
 
   //incorrect password format at least 8 characters and has both letters and numbers)
   else if (!regexPassword.test(req.body.newpassword)) {
-    message = "Password Invalid. Must have at least 8 characters, letters and numbers. Account not created."
+
+    message = "password invalid " + req.body.newpassword;
     res.render('register', {message:message});
 
   }
@@ -28,23 +38,32 @@ exports.user_create_post = function (req, res){
     var message = "Invalid email. Account not created."
     res.render('register', {message:message});
   }
-  // check if username already exists in database
+  // check if username already exists in database, if not add user.
   else {
-    
-   res.send("success");
-  /* Users.filter(function(user){
-       if(user.id === req.body.id){
-          res.render('signup', {
-             message: "User Already Exists! Login or choose another user id"});
-       }
-    });
-    var newUser = {id: req.body.id, password: req.body.password};
-    Users.push(newUser);
-    req.session.user = newUser;
-    res.redirect('/protected_page');
- }*/
-  
-  }
+
+    db.collection("User").findOne({username: req.body.newusername}, function(err, user){
+      if(err){
+        console.log(err);
+      }
+      if (user){
+        message = "Someone already has this username. Account not created."
+        res.render('register', {message:message});
+      }
+      else {
+        var newUser = new User({username: req.body.newusername, password: req.body.newpassword,
+          email: req.body.email});
+
+        db.collection("User").insertOne(newUser, function(err, res) {
+          if (err) throw err;
+          console.log("new user created called " + req.body.newusername);
+          db.close();
+        });
+        
+        res.render('register', {message:"Account Created! Go ahead and login"});
+        //req.session.user = newUser;
+      }
+    });     
+  }  
 };
 
 // add a new user to the database from get

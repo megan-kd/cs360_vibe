@@ -3,6 +3,7 @@ html
     link(rel='stylesheet', href='/stylesheets/login.css')
     div(class="login-block")
       h2 Login
+      h3 #{message}
       form(action = "/login" method = "POST")
       h4 Username
       input(name = "username" type = "text" required)
