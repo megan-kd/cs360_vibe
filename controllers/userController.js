@@ -1,4 +1,3 @@
-
 var User = require('../models/user');
 var validator = require("email-validator");
 var regexPassword = new RegExp('^(?=.*[A-Za-z])(?=.*?[0-9]).{8,}$');

@@ -8,7 +8,7 @@ var login_controller = require("../controllers/loginController");
 router.get('/', function (req, res) {
   res.render('login');
 });
-// initialize express-session to track logged-in user
+/*// initialize express-session to track logged-in user
 router.use(session({
   key: 'user_sid',
   secret: 'doug',
@@ -40,7 +40,7 @@ var sessionChecker = (req, res, next) => {
 // route for home page
 app.get('/', sessionChecker, (req, res) => {
   res.redirect('/login');
-});
+});*/
 
 router.post('/', login_controller.login_authenticate_post);
 
