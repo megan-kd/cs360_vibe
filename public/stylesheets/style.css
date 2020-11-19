@@ -1,8 +1,58 @@
 body {
-  padding: 50px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  padding-left: 10%;
+  padding-right: 10%;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url("/images/website-background.jpg");
+}
+
+@media screen and (min-width: 500px) {
+  body {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
 }
 
 a {
   color: #00B7FF;
+}
+
+.vibe-page-title {
+  padding: 20px;
+  text-align: center;
+}
+
+.vibe-content-section {
+  background-color: rgba(238, 238, 238);
+  padding: 12px 20px;
+  margin-bottom: 15px;
+  margin-top: 30px;
+  border: 1px solid #bbbbbb;
+  border-radius: 4px;
+}
+
+.vibe-see-through-bkgd {
+  background-color: rgba(238,238, 238, 0.8);
+}
+
+.vibe-error-status {
+  text-align: center;
+  font-size: 80px;
+}
+
+.vibe-error-return-home {
+  margin: 35px 20px 35px 20px;
+}
+
+.vibe-song-list {
+  margin-top: 25px;
+}
+.vibe-song-list-item {
+  margin-top: 15px;;
+}
+
+.vibe-upvote-btn {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

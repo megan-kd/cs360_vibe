@@ -1,5 +1,40 @@
-.login-block {
+.vibe-login-block {
   margin: 0 auto;
   border-radius: 5pt;
   border-color: black;
+}
+
+.vibe-register-link {
+  margin-top: 15px;
+}
+
+#vibe-login-btn {
+  margin-top: 20px;
+}
+
+.vibe-register-block {
+  margin: 0 auto;
+  border-radius: 5pt;
+  border-color: black;
+}
+
+.vibe-login-link {
+  margin-top: 15px;
+}
+
+#vibe-register-btn {
+  margin-top: 20px;
+}
+
+#securityquestion {
+  margin-top: 10px;;
+}
+
+.vibe-field {
+  margin-top: 10px;
+}
+
+.vibe-field-label {
+  width: 100%;
+  margin-top: 20px;
 }

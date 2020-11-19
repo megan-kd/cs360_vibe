@@ -1,16 +1,29 @@
-html
-  head
-    link(rel='stylesheet', href='/stylesheets/login.css')
-    div(class="login-block")
-      h2 Login
-      h3 #{message}
-      form(action = "/login" method = "POST")
-        h4 Username
-        input(name = "username" type = "text" required)
-        h4 Password
-        input(name = "password" type = "password" required)
-        button(type = "Submit") Login
+extends base
 
-    div(class="register-link")
+block metadata
+  link(
+    rel="stylesheet"
+    href="/stylesheets/login.css"
+  )
+  meta(
+    name="description"
+    content="Login page for Playlist of the Day"
+  )
+block page
+  .vibe-content-section
+    .vibe-login-block
+      h2.vibe-page-title Login
+      h3 #{message}
+      form(action="/login" method="POST")
+        label.vibe-field-label Username
+        input(name="username" type="text" required)
+        label.vibe-field-label Password
+        input(name="password" type="password" required)
+        br
+        button#vibe-login-btn.btn.btn-outline-info(type="submit") Login
+    .vibe-register-link
       p New User? 
-        a(href = '/register') Create an Account Here!
+        a(href="/register") Create an Account Here!
+    .vibe-forgot-password-link
+      p
+        a(href="#") Forgot Password?

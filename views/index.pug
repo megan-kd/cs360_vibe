@@ -1,5 +1,31 @@
 extends layout
 
+block metadata
+  meta(
+    name="description"
+    content="Playlist of the Day Home"
+  )
+
 block content
-  h1= title
-  p Welcome to #{title}
+  .vibe-content-section.vibe-see-through-bkgd
+    h1.vibe-page-title= title
+    h3.vibe-page-title= date
+    p Welcome to our #{title} project
+    button#vibe-export-playlist-btn.btn.btn-primary(type="button") Export playlist
+    ol.vibe-song-list
+      li.vibe-song-list-item Example Song 1 by Example Artist
+        br
+        button.vibe-upvote-btn.btn.btn-info(type="button") Upvote
+        hr
+      li.vibe-song-list-item Example Song 2 by Example Artist
+        br
+        button.vibe-upvote-btn.btn.btn-info(type="button") Upvote
+        hr
+      li.vibe-song-list-item Example Song 3 by Example Artist
+        br
+        button.vibe-upvote-btn.btn.btn-info(type="button") Upvote
+        hr
+      li.vibe-song-list-item Example Song 4 by Example Artist
+        br
+        button.vibe-upvote-btn.btn.btn-info(type="button") Upvote
+        hr

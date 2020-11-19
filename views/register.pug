@@ -1,31 +1,41 @@
-html
-  head
-    link(rel='stylesheet', href='/stylesheets/login.css')
-  header
-    a(href='/login') Login
-  div(class="register-block")
-    h2 Create An Account
-    h3 #{message}
-    form(action = "/register/createAccount" method = "POST")
-      h4 First Name
-      input(name = "firstname" type = "text" required)
-      h4 Last Name
-      input(name = "lastname" type = "text" required)
-      h4 New Password
-      input(name = "newpassword" type = "password" required)
-      h4 Confirm Password
-      input(name = "confirmpassword" type = "password" required)
-      h4 New Username
-      input(name = "newusername" type = "text" required)
-      h4 Email
-      input(name = "email" type = "text" required)
-      h4 Security Question:
-      select(id="securityquestion" name = "securityquestion" required)
-        option(value = "What was the first concert you went to?") What was the first concert you went to?
-        option(value = "What is your favorite song?") What is your favorite song?
-        option(value = "What is your dream band name?") What is your dream band name?
-      br
-      input(name = "securityanswer" type="text" placeholder="Answer here." required)
-      br
-      br
-      button(type = "submit") Register
+extends base
+
+block metadata
+  link(
+    rel="stylesheet"
+    href="/stylesheets/login.css"
+  )
+  meta(
+    name="description"
+    content="Registration page for Playlist of the Day account"
+  )
+block page
+  .vibe-content-section
+    .vibe-register-block
+      h2.vibe-page-title Create An Account
+      h3 #{message}
+      form(action="/register/createAccount" method="POST")
+        label.vibe-field-label First Name
+        input(name="firstname" type="text" required)
+        label.vibe-field-label Last Name
+        input(name="lastname" type="text" required)
+        label.vibe-field-label New Password
+        input(name="newpassword" type="password" required)
+        label.vibe-field-label Confirm Password
+        input(name="confirmpassword" type="password" required)
+        label.vibe-field-label New Username
+        input(name="newusername" type="text" required)
+        label.vibe-field-label Email
+        input(name="email" type="text" required)
+        label.vibe-field-label Security Question:
+        select(id="securityquestion" name="securityquestion" required)
+          option(value="What was the first concert you went to?") What was the first concert you went to?
+          option(value="What is your favorite song?") What is your favorite song?
+          option(value="What is your dream band name?") What is your dream band name?
+        br
+        input.vibe-field(name="securityanswer" type="text" placeholder="Answer here." required)
+        br
+        button#vibe-register-btn.btn.btn-outline-info(type="submit") Register
+    .vibe-login-link
+      p Already have an account? 
+        a(href="/login") Login

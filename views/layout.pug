@@ -1,7 +1,28 @@
-doctype html
-html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+extends base
+
+block metadata
+
+block page
+  header
+    nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark.shadow
+      a.navbar-brand Playlist of the Day
+      button.navbar-toggler(
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarCollapse"
+        aria-controls="navbarCollapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      )
+        span.navbar-toggler-icon
+      #navbarCollapse.collapse.navbar-collapse
+        ul.navbar-nav.ml-auto
+          li.navbar-item
+            a.nav-link(href="/") Home
+          li.navbar-item
+            a.nav-link(href="#") Add a Song
+          li.navbar-item
+            a.nav-link(href="#") Change User Info
+          li.navbar-item
+            a.nav-link(href="#") Logout
+  block content
