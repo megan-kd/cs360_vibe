@@ -38,3 +38,13 @@
 #securityquestion {
   margin-top: 10px;;
 }
+
+#login-error-message {
+  color: red;
+}
+
+#registration-error-message {
+  color: red;
+  margin-top: 30px;
+  margin-bottom: 0;
+}
