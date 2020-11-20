@@ -23,6 +23,11 @@ a {
   text-align: center;
 }
 
+#navbar-collapse {
+  display: flex;
+  align-items: center;
+}
+
 .vibe-content-section {
   background-color: rgba(238, 238, 238);
   padding: 12px 20px;
@@ -41,8 +46,21 @@ a {
   font-size: 80px;
 }
 
+.vibe-error-icon {
+  margin-top: 40px;
+  color: red;
+}
+
+.vibe-error-page-home-icon {
+  margin-right: 12px;
+}
+
 .vibe-error-return-home {
   margin: 35px 20px 35px 20px;
+}
+
+.vibe-header-icon {
+  margin-right: 5px;
 }
 
 .vibe-song-list {
@@ -52,7 +70,32 @@ a {
   margin-top: 15px;;
 }
 
+#vibe-export-playlist-btn {
+  display: flex;
+  align-items: center;
+  border-radius: 28px;
+}
+
+.vibe-spotify-icon {
+  margin-left: 15px;
+}
+
+.fa-spotify {
+  color: #1ED761;
+}
+
 .vibe-upvote-btn {
+  display: flex;
+  align-items: center;
   margin-top: 10px;
   margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.vibe-upvote-icon {
+  margin-right: 12px;
+}
+
+.fa-thumbs-up {
+  color: #ffffff;
 }
