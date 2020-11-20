@@ -44,11 +44,12 @@ a {
 .vibe-error-status {
   text-align: center;
   font-size: 80px;
+  color: black;
 }
 
 .vibe-error-icon {
   margin-top: 40px;
-  color: red;
+  color: black;
 }
 
 .vibe-error-page-home-icon {
