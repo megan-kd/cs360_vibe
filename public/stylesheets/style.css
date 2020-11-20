@@ -143,6 +143,10 @@ a {
   border-radius: 10px;
 }
 
+.vibe-upvote-btn-pressed .vibe-upvote-icon {
+  color: black;
+}
+
 .vibe-upvote-icon {
   margin-right: 12px;
 }
