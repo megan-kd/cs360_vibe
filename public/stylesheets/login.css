@@ -4,12 +4,20 @@
   border-color: black;
 }
 
-.vibe-register-link {
-  margin-top: 15px;
+#vibe-forgot-password-link {
+  width: 100%;
+  display: block;
+  text-align: center;
+  padding: 10px;
+}
+
+#vibe-register-link {
+  margin-top: 35px;
 }
 
 #vibe-login-btn {
   margin-top: 20px;
+  width: 100%;
 }
 
 .vibe-register-block {
@@ -24,17 +32,9 @@
 
 #vibe-register-btn {
   margin-top: 20px;
+  width: 100%
 }
 
 #securityquestion {
   margin-top: 10px;;
-}
-
-.vibe-field {
-  margin-top: 10px;
-}
-
-.vibe-field-label {
-  width: 100%;
-  margin-top: 20px;
 }

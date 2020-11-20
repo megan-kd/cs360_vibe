@@ -15,15 +15,15 @@ block page
       h2.vibe-page-title Login
       h3 #{message}
       form(action="/login" method="POST")
-        label.vibe-field-label Username
-        input(name="username" type="text" required)
-        label.vibe-field-label Password
-        input(name="password" type="password" required)
-        br
+        .form-group
+          label Username
+          input.form-control(name="username" type="text" required)
+        .form-group
+          label Password
+          input.form-control(name="password" type="password" required)
         button#vibe-login-btn.btn.btn-outline-info(type="submit") Login
-    .vibe-register-link
+    #vibe-forgot-password-link
+      a(href="#") Forgot Password?
+    #vibe-register-link
       p New User? 
         a(href="/register") Create an Account Here!
-    .vibe-forgot-password-link
-      p
-        a(href="#") Forgot Password?
