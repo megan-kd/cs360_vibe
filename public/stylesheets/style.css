@@ -7,10 +7,10 @@ body {
   background-image: url("/images/website-background.jpg");
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 1000px) {
   body {
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 100px;
+    padding-right: 100px;
   }
 }
 
@@ -39,6 +39,29 @@ a {
 
 .vibe-see-through-bkgd {
   background-color: rgba(238,238, 238, 0.8);
+}
+
+.vibe-container-heading {
+  text-align: center;
+}
+
+@media screen and (min-width: 700px) {
+  .vibe-two-col-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    grid-template-rows: repeat(1, 1fr);
+  }
+
+  .vibe-col-one {
+    grid-column: 1;
+    grid-row-start: 1;
+  }
+
+  .vibe-col-two {
+    grid-column: 2;
+    grid-row-start: 1;
+  }
 }
 
 .vibe-error-status {
@@ -71,10 +94,29 @@ a {
   margin-top: 15px;;
 }
 
+#vibe-add-song-btn {
+  display: flex;
+  align-items: center;
+}
+
+.vibe-add-song-icon {
+  margin-right: 15px;
+}
+
+.vibe-major-hr {
+  border: none;
+  height: 1px;
+  color: grey;
+  background-color: grey;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
 #vibe-export-playlist-btn {
   display: flex;
   align-items: center;
   border-radius: 28px;
+  box-shadow: 4px 4px #808080;
 }
 
 .vibe-spotify-icon {
@@ -99,4 +141,16 @@ a {
 
 .fa-thumbs-up {
   color: #ffffff;
+}
+
+#vibe-track-input {
+  margin-top: 15px;
+}
+
+#vibe-artist-input{
+  margin-top: 15px;
+}
+
+#vibe-search-btn {
+  margin-top: 15px;
 }
