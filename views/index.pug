@@ -12,14 +12,14 @@ block content
     h3.vibe-page-title= date
     .vibe-two-col-container
       .vibe-col-two
-        p Welcome to our #{title} project
+        p Welcome to our #{title} project!
         .vibe-add-song-btn-container
           button#vibe-add-song-btn.btn.btn-dark(type="button") 
             i.vibe-add-song-icon.fas.fa-plus.fa-lg 
             span Add a Song
           hr.vibe-major-hr
         .vibe-contribute-song-container
-          h4.vibe-container-heading Contribute Your Song
+          h4 Contribute Your Song
           form#vibe-search-form(
             action="/search"
             method="POST"
@@ -28,7 +28,7 @@ block content
             br
             input#vibe-artist-input(name="artistName" type="text" placeholder="Artist name")
             br
-            button#vibe-search-btn.btn.btn-secondary(type="submit") Search
+            button#vibe-search-btn.btn.btn-dark(type="submit") Search
       .vibe-col-one
         button#vibe-export-playlist-btn.vibe-container-heading.btn.btn-primary(type="button") Export playlist
           i.vibe-spotify-icon.fab.fa-spotify.fa-3x

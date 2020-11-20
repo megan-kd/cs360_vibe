@@ -41,15 +41,15 @@ a {
   background-color: rgba(238,238, 238, 0.8);
 }
 
-.vibe-container-heading {
-  text-align: center;
+.vibe-contribute-song-container {
+  display: none;
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 750px) {
   .vibe-two-col-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    gap: 25px;
     grid-template-rows: repeat(1, 1fr);
   }
 
@@ -61,6 +61,14 @@ a {
   .vibe-col-two {
     grid-column: 2;
     grid-row-start: 1;
+  }
+
+  .vibe-add-song-btn-container {
+    display: none;
+  }
+
+  .vibe-contribute-song-container {
+    display: block;
   }
 }
 
