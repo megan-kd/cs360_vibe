@@ -12,50 +12,126 @@ block content
     h3.vibe-page-title= date
     .vibe-two-col-container
       .vibe-col-two
-        p Welcome to our #{title} project!
+        p Welcome to our #{title} project! Feel free to suggest whatever song fits how you are feeling today!
         .vibe-add-song-btn-container
           button#vibe-add-song-btn.btn.btn-dark(type="button") 
             i.vibe-add-song-icon.fas.fa-plus.fa-lg 
             span Add a Song
           hr.vibe-major-hr
         .vibe-contribute-song-container
-          h4 Contribute Your Song
-          form#vibe-search-form(
+          h4.vibe-contribute-song-container-heading Contribute Your Song
+          form#search-form(
             action="/search"
             method="POST"
           )
-            input#vibe-track-input.form-control(name="trackName" type="text" placeholder="Track name")
-            input#vibe-artist-input.form-control(name="artistName" type="text" placeholder="Artist name")
-            button#vibe-search-btn.btn.btn-dark(type="submit") 
+            input#track-input.form-control(name="trackName" type="text" placeholder="Track name")
+            input#artist-input.form-control(name="artistName" type="text" placeholder="Artist name")
+            button#search-btn.btn.btn-dark(type="submit") 
               i.fas.fa-search
       .vibe-col-one
-        button#vibe-export-playlist-btn.vibe-container-heading.btn.btn-primary(type="button") Export playlist
+        button#export-playlist-btn.vibe-container-heading.btn.btn-primary(type="button") Export playlist
           i.vibe-spotify-icon.fab.fa-spotify.fa-3x
         ol.vibe-song-list
           // Add class "vibe-upvote-btn-pressed" to indicate that a song has been upvoted!!
           li.vibe-song-list-item Example Song 1 by Example Artist
             br
-            button.vibe-upvote-btn.btn.btn-info(type="button") 
-              i.vibe-upvote-icon.fas.fa-thumbs-up.fa-2x
-              span Upvote
+            .vibe-voting-section
+              button.vibe-upvote-btn.btn.btn-info(type="button") 
+                i.vibe-upvote-icon.fas.fa-thumbs-up.fa-2x
+                span Upvote
+              .vibe-votes 
+                b Votes
+                p.vibe-vote-count 999322323
             hr
           li.vibe-song-list-item Example Song 2 by Example Artist
             br
-            button.vibe-upvote-btn.btn.btn-info(type="button") 
-              i.vibe-upvote-icon.fas.fa-thumbs-up.fa-2x
-              span Upvote
+            .vibe-voting-section
+              button.vibe-upvote-btn.btn.btn-info(type="button") 
+                i.vibe-upvote-icon.fas.fa-thumbs-up.fa-2x
+                span Upvote
+              .vibe-votes 
+                b Votes
+                p.vibe-vote-count 4372842
             hr
           li.vibe-song-list-item Example Song 3 by Example Artist
             br
-            button.vibe-upvote-btn.btn.btn-info(type="button") 
-              i.vibe-upvote-icon.fas.fa-thumbs-up.fa-2x
-              span Upvote
+            .vibe-voting-section
+              button.vibe-upvote-btn.btn.btn-info(type="button") 
+                i.vibe-upvote-icon.fas.fa-thumbs-up.fa-2x
+                span Upvote
+              .vibe-votes 
+                b Votes
+                p.vibe-vote-count 3742377
             hr
           li.vibe-song-list-item Example Song 4 by Example Artist
             br
-            button.vibe-upvote-btn.btn.btn-info(type="button") 
-              i.vibe-upvote-icon.fas.fa-thumbs-up.fa-2x
-              span Upvote
+            .vibe-voting-section
+              button.vibe-upvote-btn.btn.btn-info(type="button") 
+                i.vibe-upvote-icon.fas.fa-thumbs-up.fa-2x
+                span Upvote
+              .vibe-votes 
+                b Votes
+                p.vibe-vote-count 38743
+            hr
+          li.vibe-song-list-item Example Song 5 by Example Artist
+            br
+            .vibe-voting-section
+              button.vibe-upvote-btn.btn.btn-info(type="button") 
+                i.vibe-upvote-icon.fas.fa-thumbs-up.fa-2x
+                span Upvote
+              .vibe-votes 
+                b Votes
+                p.vibe-vote-count 123443
+            hr
+          li.vibe-song-list-item Example Song 6 by Example Artist
+            br
+            .vibe-voting-section
+              button.vibe-upvote-btn.btn.btn-info(type="button") 
+                i.vibe-upvote-icon.fas.fa-thumbs-up.fa-2x
+                span Upvote
+              .vibe-votes 
+                b Votes
+                p.vibe-vote-count 89734
+            hr
+          li.vibe-song-list-item Example Song 7 by Example Artist
+            br
+            .vibe-voting-section
+              button.vibe-upvote-btn.btn.btn-info(type="button") 
+                i.vibe-upvote-icon.fas.fa-thumbs-up.fa-2x
+                span Upvote
+              .vibe-votes 
+                b Votes
+                p.vibe-vote-count 37438
+            hr
+          li.vibe-song-list-item Example Song 8 by Example Artist
+            br
+            .vibe-voting-section
+              button.vibe-upvote-btn.btn.btn-info(type="button") 
+                i.vibe-upvote-icon.fas.fa-thumbs-up.fa-2x
+                span Upvote
+              .vibe-votes 
+                b Votes
+                p.vibe-vote-count 345737
+            hr
+          li.vibe-song-list-item Example Song 9 by Example Artist
+            br
+            .vibe-voting-section
+              button.vibe-upvote-btn.btn.btn-info(type="button") 
+                i.vibe-upvote-icon.fas.fa-thumbs-up.fa-2x
+                span Upvote
+              .vibe-votes 
+                b Votes
+                p.vibe-vote-count 876543
+            hr
+          li.vibe-song-list-item Example Song 10 by Example Artist
+            br
+            .vibe-voting-section
+              button.vibe-upvote-btn.btn.btn-info(type="button") 
+                i.vibe-upvote-icon.fas.fa-thumbs-up.fa-2x
+                span Upvote
+              .vibe-votes 
+                b Votes
+                p.vibe-vote-count 12(hardcoded)
             hr
     .vibe-footer
       a.float-right(href="#") Back to top

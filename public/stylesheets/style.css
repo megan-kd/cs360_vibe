@@ -45,6 +45,10 @@ a {
   display: none;
 }
 
+.vibe-contribute-song-container-heading {
+  padding-top: 10px;
+}
+
 @media screen and (min-width: 750px) {
   .vibe-two-col-container {
     display: grid;
@@ -69,6 +73,9 @@ a {
 
   .vibe-contribute-song-container {
     display: block;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 70px;
   }
 }
 
@@ -120,7 +127,7 @@ a {
   margin-bottom: 30px;
 }
 
-#vibe-export-playlist-btn {
+#export-playlist-btn {
   display: flex;
   align-items: center;
   border-radius: 28px;
@@ -135,11 +142,14 @@ a {
   color: #1ED761;
 }
 
+.vibe-voting-section {
+  margin-top: 15px;
+}
+
 .vibe-upvote-btn {
   display: flex;
   align-items: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  display: inline;
   border-radius: 10px;
 }
 
@@ -155,15 +165,33 @@ a {
   color: #ffffff;
 }
 
-#vibe-track-input {
+.vibe-votes {
+  position: absolute;
+  display: inline;
+  text-align: center;
+  padding: 8px;
+  margin-left: 5px;
+}
+
+hr {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.vibe-vote-count {
+  margin-bottom: 0;
+  margin-top: 5px;
+}
+
+#track-input {
   margin-top: 15px;
 }
 
-#vibe-artist-input{
+#artist-input{
   margin-top: 15px;
 }
 
-#vibe-search-btn {
+#search-btn {
   margin-top: 15px;
   width: 100%
 }

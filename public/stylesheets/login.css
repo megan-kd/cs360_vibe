@@ -4,18 +4,18 @@
   border-color: black;
 }
 
-#vibe-forgot-password-link {
+#forgot-password-link {
   width: 100%;
   display: block;
   text-align: center;
   padding: 10px;
 }
 
-#vibe-register-link {
+#register-link {
   margin-top: 35px;
 }
 
-#vibe-login-btn {
+#login-btn {
   margin-top: 20px;
   width: 100%;
 }
@@ -30,7 +30,7 @@
   margin-top: 15px;
 }
 
-#vibe-register-btn {
+#register-btn {
   margin-top: 20px;
   width: 100%
 }
