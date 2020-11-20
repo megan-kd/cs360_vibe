@@ -11,7 +11,7 @@ let year = current.getFullYear();
 let date = month + "/" + day + "/" + year;
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Vibe of the Day', date: date });
+  res.render('index', { title: 'Playlist of the Day', date: date });
 });
 
 module.exports = router;
