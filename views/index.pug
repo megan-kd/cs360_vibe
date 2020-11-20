@@ -24,11 +24,10 @@ block content
             action="/search"
             method="POST"
           )
-            input#vibe-track-input(name="trackName" type="text" placeholder="Track name")
-            br
-            input#vibe-artist-input(name="artistName" type="text" placeholder="Artist name")
-            br
-            button#vibe-search-btn.btn.btn-dark(type="submit") Search
+            input#vibe-track-input.form-control(name="trackName" type="text" placeholder="Track name")
+            input#vibe-artist-input.form-control(name="artistName" type="text" placeholder="Artist name")
+            button#vibe-search-btn.btn.btn-dark(type="submit") 
+              i.fas.fa-search
       .vibe-col-one
         button#vibe-export-playlist-btn.vibe-container-heading.btn.btn-primary(type="button") Export playlist
           i.vibe-spotify-icon.fab.fa-spotify.fa-3x
