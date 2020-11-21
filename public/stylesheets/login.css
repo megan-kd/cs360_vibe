@@ -1,5 +1,50 @@
-.login-block {
+.vibe-login-block {
   margin: 0 auto;
   border-radius: 5pt;
   border-color: black;
+}
+
+#forgot-password-link {
+  width: 100%;
+  display: block;
+  text-align: center;
+  padding: 10px;
+}
+
+#register-link {
+  margin-top: 35px;
+}
+
+#login-btn {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.vibe-register-block {
+  margin: 0 auto;
+  border-radius: 5pt;
+  border-color: black;
+}
+
+.vibe-login-link {
+  margin-top: 15px;
+}
+
+#register-btn {
+  margin-top: 20px;
+  width: 100%
+}
+
+#securityquestion {
+  margin-top: 10px;;
+}
+
+#login-error-message {
+  color: red;
+}
+
+#registration-error-message {
+  color: red;
+  margin-top: 30px;
+  margin-bottom: 0;
 }

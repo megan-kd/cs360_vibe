@@ -1,8 +1,201 @@
 body {
-  padding: 50px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  padding-left: 10%;
+  padding-right: 10%;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url("/images/website-background.jpg");
+}
+
+@media screen and (min-width: 1000px) {
+  body {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
 }
 
 a {
   color: #00B7FF;
+}
+
+.vibe-page-title {
+  padding: 20px;
+  text-align: center;
+}
+
+#navbar-collapse {
+  display: flex;
+  align-items: center;
+}
+
+.vibe-content-section {
+  background-color: rgba(238, 238, 238);
+  padding: 12px 20px;
+  margin-bottom: 15px;
+  margin-top: 30px;
+  border: 1px solid #bbbbbb;
+  border-radius: 4px;
+}
+
+.vibe-see-through-bkgd {
+  background-color: rgba(238,238, 238, 0.8);
+}
+
+.vibe-contribute-song-container {
+  display: none;
+}
+
+.vibe-contribute-song-container-heading {
+  padding-top: 10px;
+}
+
+@media screen and (min-width: 750px) {
+  .vibe-two-col-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 35px;
+    grid-template-rows: repeat(1, 1fr);
+  }
+
+  .vibe-col-one {
+    grid-column: 1;
+    grid-row-start: 1;
+  }
+
+  .vibe-col-two {
+    grid-column: 2;
+    grid-row-start: 1;
+  }
+
+  .vibe-add-song-btn-container {
+    display: none;
+  }
+
+  .vibe-contribute-song-container {
+    display: block;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 70px;
+  }
+}
+
+.vibe-error-status {
+  text-align: center;
+  font-size: 80px;
+  color: black;
+}
+
+.vibe-error-icon {
+  margin-top: 40px;
+  color: black;
+}
+
+.vibe-error-page-home-icon {
+  margin-right: 12px;
+}
+
+.vibe-error-return-home {
+  margin: 35px 20px 35px 20px;
+}
+
+.vibe-header-icon {
+  margin-right: 5px;
+}
+
+.vibe-song-list {
+  margin-top: 25px;
+}
+.vibe-song-list-item {
+  margin-top: 15px;;
+}
+
+#vibe-add-song-btn {
+  display: flex;
+  align-items: center;
+}
+
+.vibe-add-song-icon {
+  margin-right: 15px;
+}
+
+.vibe-major-hr {
+  border: none;
+  height: 1px;
+  color: grey;
+  background-color: grey;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+#export-playlist-btn {
+  display: flex;
+  align-items: center;
+  border-radius: 28px;
+  box-shadow: 4px 4px #808080;
+}
+
+.vibe-spotify-icon {
+  margin-left: 15px;
+}
+
+.fa-spotify {
+  color: #1ED761;
+}
+
+.vibe-voting-section {
+  margin-top: 15px;
+}
+
+.vibe-upvote-btn {
+  display: flex;
+  align-items: center;
+  display: inline;
+  border-radius: 10px;
+}
+
+.vibe-upvote-btn-pressed .vibe-upvote-icon {
+  color: black;
+}
+
+.vibe-upvote-icon {
+  margin-right: 12px;
+}
+
+.fa-thumbs-up {
+  color: #ffffff;
+}
+
+.vibe-votes {
+  position: absolute;
+  display: inline;
+  text-align: center;
+  padding: 8px;
+  margin-left: 5px;
+}
+
+hr {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.vibe-vote-count {
+  margin-bottom: 0;
+  margin-top: 5px;
+}
+
+#track-input {
+  margin-top: 15px;
+}
+
+#artist-input{
+  margin-top: 15px;
+}
+
+#search-btn {
+  margin-top: 15px;
+  width: 100%
+}
+
+.vibe-footer {
+  margin-bottom: 30px;
 }
