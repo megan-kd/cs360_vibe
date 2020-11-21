@@ -1,5 +1,6 @@
 var User = require('../models/user');
 var validator = require("email-validator");
+var bcrypt = require("bcrypt");
 var regexPassword = new RegExp('^(?=.*[A-Za-z])(?=.*?[0-9]).{8,}$');
 
 var mongoose = require('mongoose');
@@ -8,7 +9,6 @@ mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
 
 // add a new user to the database from post
 exports.user_create_post = function (req, res){
@@ -24,18 +24,18 @@ exports.user_create_post = function (req, res){
   //incorrect password format at least 8 characters and has both letters and numbers)
   else if (!regexPassword.test(req.body.newpassword)) {
 
-    message = "password invalid " + req.body.newpassword;
+    message = "password needs 8 characters including at least one letter and one number!";
     res.render('register', {message:message});
 
   }
   // could not confirm password
   else if (req.body.newpassword != req.body.confirmpassword){
-    var message = "Passwords do not match. Account not created."
+    message = "Passwords do not match. Account not created."
     res.render('register', {message:message});
   }
   // if email is not the correct format
   else if (!validator.validate(req.body.email)){
-    var message = "Invalid email. Account not created."
+    message = "Invalid email. Account not created."
     res.render('register', {message:message});
   }
   // check if username already exists in database, if not add user.
@@ -50,43 +50,34 @@ exports.user_create_post = function (req, res){
         res.render('register', {message:message});
       }
       else {
-        var newUser = new User({username: req.body.newusername, password: req.body.newpassword,
-          email: req.body.email, securityQuestionPrompt: req.body.securityquestion,
-          securityQuestionAnswer: req.body.securityanswer, firstName: req.body.firstname,
-          lastName: req.body.lastname});
-
-        db.collection("User").insertOne(newUser, function(err, res) {
-          if (err) throw err;
-        db.close();
+        // encrypt password
+        // let encryptedPassWord;
+        bcrypt.hash(req.body.newpassword, 10, function(err, encrypted){
+          if (err){
+            console.log(err);
+          }
+          else {
+            newUser = new User({username: req.body.newusername, password: encrypted,
+              email: req.body.email, securityQuestionPrompt: req.body.securityquestion,
+              securityQuestionAnswer: req.body.securityanswer, firstName: req.body.firstname,
+              lastName: req.body.lastname});
+    
+            db.collection("User").insertOne(newUser, function(err, res) {
+              if (err) throw err;
+              db.close();
+            });
+          }
+          
+          
         });
         
-        res.render('register', {message:"Account Created! Go ahead and login"});
-        //req.session.user = newUser;
+        
+        res.redirect('/login');
       }
     });     
   }  
 };
 
-/*
-exports.user_login_post = function(req, res)
-{
-  db.collection("User").findOne({username: req.body.username, password: req.body.password}),
-  function (err, user){
-    if(err){
-      console.log(err);
-    }
-    if (!user)
-    {
-      message = "This Username does not exist. Please enter a valid username.";
-      res.render('login', {message: message});
-    }
-    else
-    {
-
-    }
-  }
-}
-*/
 // add a new user to the database from get
 exports.user_create_get = function (req, res){
   res.send("NOT IMPLEMENTED: Create User from Get");
