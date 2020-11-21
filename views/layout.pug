@@ -1,0 +1,36 @@
+extends base
+
+block metadata
+
+block page
+  header
+    nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark.shadow
+      a.navbar-brand Playlist of the Day
+      button.navbar-toggler(
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarCollapse"
+        aria-controls="navbarCollapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      )
+        span.navbar-toggler-icon
+      #navbarCollapse.collapse.navbar-collapse
+        ul.navbar-nav.ml-auto
+          li.navbar-item
+            a.nav-link(href="/") 
+              i.vibe-header-icon.fas.fa-home.fa-sm 
+              span Home
+          li.navbar-item
+            a.nav-link(href="#") 
+              i.vibe-header-icon.fas.fa-plus.fa-sm 
+              span Add a Song
+          li.navbar-item
+            a.nav-link(href="#") 
+              i.vibe-header-icon.fas.fa-info-circle.fa-sm 
+              span Change User Info
+          li.navbar-item
+            a.nav-link(href="/login") 
+              i.vibe-header-icon.fas.fa-sign-out-alt.fa-sm 
+              span Logout
+  block content

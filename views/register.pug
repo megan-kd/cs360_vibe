@@ -1,0 +1,46 @@
+extends base
+
+block metadata
+  link(
+    rel="stylesheet"
+    href="/stylesheets/login.css"
+  )
+  meta(
+    name="description"
+    content="Registration page for Playlist of the Day account"
+  )
+block page
+  .vibe-content-section
+    .vibe-register-block
+      h2.vibe-page-title Create An Account
+      form(action="/register/createAccount" method="POST")
+        .form-group
+          label First Name
+          input.form-control(name="firstname" type="text" required)
+        .form-group
+          label Last Name
+          input.form-control(name="lastname" type="text" required)
+        .form-group
+          label Email
+          input.form-control(name="email" type="text" required)
+        .form-group
+          label Choose a Username
+          input.form-control(name="newusername" type="text" required)
+        .form-group
+          label Create a Password
+          input.form-control(name="newpassword" type="password" required)
+        .form-group
+          label Confirm Password
+          input.form-control(name="confirmpassword" type="password" required)
+        .form-group
+          label Security Question:
+          select.form-control(id="securityquestion" name="securityquestion" required)
+            option(value="What was the first concert you went to?") What was the first concert you went to?
+            option(value="What is your favorite song?") What is your favorite song?
+            option(value="What is your dream band name?") What is your dream band name?
+          input.form-control(name="securityanswer" type="text" placeholder="Answer" required)
+        p#registration-error-message #{message}
+        button#register-btn.btn.btn-outline-info(type="submit") Register
+    .vibe-login-link
+      p Already have an account? 
+        a(href="/login") Login

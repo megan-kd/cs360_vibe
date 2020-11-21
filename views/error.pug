@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  .vibe-content-section.vibe-see-through-bkgd
+    h1= message
+    h2.vibe-error-status= error.status
+    h2.vibe-error-status
+      i.vibe-error-icon.fas.fa-bomb
+    h4.vibe-error-return-home 
+      a(href="/") 
+        i.vibe-error-page-home-icon.fas.fa-home 
+        span Return home?
+    pre #{error.stack}

@@ -1,0 +1,29 @@
+extends base
+
+block metadata
+  link(
+    rel="stylesheet"
+    href="/stylesheets/login.css"
+  )
+  meta(
+    name="description"
+    content="Login page for Playlist of the Day"
+  )
+block page
+  .vibe-content-section
+    .vibe-login-block
+      h2.vibe-page-title Login
+      form(action="/login" method="POST")
+        .form-group
+          label Username
+          input.form-control(name="username" type="text" required)
+        .form-group
+          label Password
+          input.form-control(name="password" type="password" required)
+        em#login-error-message #{message}
+        button#login-btn.btn.btn-outline-info(type="submit") Login
+    #forgot-password-link
+      a(href="#") Forgot Password?
+    #register-link
+      p New User? 
+        a(href="/register") Create an Account Here!
