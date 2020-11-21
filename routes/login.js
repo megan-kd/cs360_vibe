@@ -8,6 +8,8 @@ var login_controller = require("../controllers/loginController");
 router.get('/', function (req, res) {
   res.render('login');
 });
+
+router.post('/login', login_controller.login_authenticate_post);
 /*// initialize express-session to track logged-in user
 router.use(session({
   key: 'user_sid',

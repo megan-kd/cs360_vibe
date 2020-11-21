@@ -22,9 +22,7 @@ exports.login_authenticate_post = function (req, res) {
       }
       // user was found, log them in an create a session cookie
       else if (user){
-        message = "Logged in!!"
-        res.render('login', {message:message});
-        message = " ";
+        res.redirect('/');
       }
       else {
         message = "Account not found. Credentials are incorrect."
