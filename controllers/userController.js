@@ -53,7 +53,7 @@ exports.user_create_post = function (req, res){
         var newUser = new User({username: req.body.newusername, password: req.body.newpassword,
           email: req.body.email, securityQuestionPrompt: req.body.securityquestion,
           securityQuestionAnswer: req.body.securityanswer, firstName: req.body.firstname,
-          lastName: req.body.firstname});
+          lastName: req.body.lastname});
 
         db.collection("User").insertOne(newUser, function(err, res) {
           if (err) throw err;
