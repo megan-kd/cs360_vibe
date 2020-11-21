@@ -11,7 +11,15 @@ let year = current.getFullYear();
 let date = month + "/" + day + "/" + year;
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Playlist of the Day', date: date });
+  console.log(req.session.username);
+  if (req.session.username){
+   
+    res.render('index', { title: 'Playlist of the Day', date: date });
+  }
+  else {
+    res.redirect('/login');
+  }
+  
 });
 
 module.exports = router;
