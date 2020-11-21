@@ -67,6 +67,26 @@ exports.user_create_post = function (req, res){
   }  
 };
 
+/*
+exports.user_login_post = function(req, res)
+{
+  db.collection("User").findOne({username: req.body.username, password: req.body.password}),
+  function (err, user){
+    if(err){
+      console.log(err);
+    }
+    if (!user)
+    {
+      message = "This Username does not exist. Please enter a valid username.";
+      res.render('login', {message: message});
+    }
+    else
+    {
+
+    }
+  }
+}
+*/
 // add a new user to the database from get
 exports.user_create_get = function (req, res){
   res.send("NOT IMPLEMENTED: Create User from Get");
