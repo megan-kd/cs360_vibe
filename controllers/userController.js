@@ -2,6 +2,7 @@ var User = require('../models/user');
 var validator = require("email-validator");
 var bcrypt = require("bcrypt");
 var regexPassword = new RegExp('^(?=.*[A-Za-z])(?=.*?[0-9]).{8,}$');
+let alert = require('alert');
 
 var mongoose = require('mongoose');
 const { render } = require('pug');
@@ -92,6 +93,7 @@ exports.user_delete_post = function (req, res){
 exports.user_update_account_post = function (req, res){
   // get current user through login session cookie
   let currentUser = req.session.username;
+  var message = " ";
 
   //if first name is being changed
   if (req.body.firstname){
@@ -107,15 +109,99 @@ exports.user_update_account_post = function (req, res){
 
   //if email is being changed
   if (req.body.email){
-    db.collection("User").updateOne({username: currentUser}, 
-      {$set: {'email': req.body.email}});
+    if (!validator.validate(req.body.email)){
+      message += "\nEmail improper format. Email not updated.";
+    }
+    else {
+      db.collection("User").updateOne({username: currentUser}, 
+        {$set: {'email': req.body.email}});
+    }
+    
   }
 
-  //if username is being changed
+   //if security question/answer being changed
+  if (req.body.securityanswer){
+    db.collection("User").updateOne({username: currentUser},
+       {$set: {securityQuestionPrompt: req.body.securityquestion,
+         securityQuestionAnswer: req.body.securityanswer}});
+  }
 
-  //if security question/answer being changed
+  //credentials
+  //changing username
+  if (req.body.username){
+    // does this username already exist?
+    db.collection("User").findOne({username: req.body.username}, function(err, user){
+      if(err){
+        console.log(err);
+      }
+      //somebody already has username, not changed
+      if (user){
+        alert("Someone already has this username. Username not changed.");
+      }
+      // change username
+      else {
+        db.collection("User").updateOne({username: currentUser}, 
+          {$set: {'username': req.body.username}});
+        
+          currentUser = req.body.username;
+          req.session.username = req.body.username;
+      }
+    });
 
-  //if changing password
+  }
+  
+  //changing password
+  if (req.body.newpassword){
+    //missing fields
+    if (!req.body.currentpassword || !req.body.confirmpassword){
+      message += "\nPlease enter current password and confirm new password. Password not changed."
+      //res.render('updateAccount', {message: message});
+    }
+    // current password doesn't match current password
+    db.collection("User").findOne({username: currentUser},
+      function(err, user){
+        if (err){
+          console.log(err)
+        }
+        if (user){
+          bcrypt.compare(req.body.password, user.password, function(err, same){
+            if (!same){
+              alert("Current password is incorrect. Password not changed");
+            }
+          });
+        }
 
+    });
+    //confirm password doesn't match new password
+    if (req.body.newpassword != req.body.confirmpassword){
+      message += "\nNew Password and Confirm Password do not match. Password not changed."
+      //res.render('updateAccount', {message: message});
+    }
+    //not correct password format
+    else if (!regexPassword.test(req.body.newpassword)) {
+      message += "\nNew password needs 8 characters including at least one" + 
+                " letter and one number! Password not changed."
+      //res.render('updateAccount', {message: message});
+    }
+
+    // password values are good to go
+    else {
+      bcrypt.hash(req.body.newpassword, 10, function(err, encrypted){
+        if (err){
+          console.log(err);
+          alert("Error. Password not changed.");
+          //res.render('updateAccount', {message: message});
+        }
+        else {
+          db.collection("User").updateOne({username: currentUser}, 
+            {$set: {'password': req.body.newpassword}});
+        } 
+      });
+
+    }
+
+  }
+  message += "\nAll other fields updated."
+  alert(message);
   res.redirect('/login');
 }

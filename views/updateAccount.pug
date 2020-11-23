@@ -2,6 +2,7 @@ doctype html
 html
   head
   body
+    h1 #{message}
     div
       h2 Change Account Info
       h4 only enter values for the info you want to change!
@@ -12,8 +13,6 @@ html
         input(name="lastname" type="text")
         h4 New Email
         input(name="email" type="text")
-        h4 New Username
-        input(name="username" type="text")
         h4 Security Question
         select(id="securityquestion" name="securityquestion")
             option(value="What was the first concert you went to?") What was the first concert you went to?
@@ -23,7 +22,10 @@ html
         input(name="securityanswer" type="text")
         br
         br
-        h3 Change Your Password
+        h3 Change Your Credentials
+        h4 New Username
+        input(name="username" type="text")
+
         h4 Current Password
         input(name="currentpassword" type="password")
         h4 New Password
