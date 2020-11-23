@@ -66,7 +66,7 @@ exports.user_create_post = function (req, res){
     
             db.collection("User").insertOne(newUser, function(err, res) {
               if (err) throw err;
-              db.close();
+              //db.close();
             });
           }
           
