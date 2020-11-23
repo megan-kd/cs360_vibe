@@ -94,6 +94,7 @@ exports.user_update_account_post = function (req, res){
   // get current user through login session cookie
   let currentUser = req.session.username;
   var message = " ";
+  var bCanChangePassword = true;
 
   //if first name is being changed
   if (req.body.firstname){
@@ -153,8 +154,11 @@ exports.user_update_account_post = function (req, res){
   //changing password
   if (req.body.newpassword){
     //missing fields
-    if (!req.body.currentpassword || !req.body.confirmpassword){
+    if (!req.body.currentpassword || !req.body.confirmnewpassword){
       message += "\nPlease enter current password and confirm new password. Password not changed."
+      alert(message);
+      res.redirect('/login');
+    
       //res.render('updateAccount', {message: message});
     }
     // current password doesn't match current password
@@ -164,16 +168,16 @@ exports.user_update_account_post = function (req, res){
           console.log(err)
         }
         if (user){
-          bcrypt.compare(req.body.password, user.password, function(err, same){
+          bcrypt.compare(req.body.newpassword, user.password, function(err, same){
             if (!same){
               alert("Current password is incorrect. Password not changed");
+              res.redirect('/login');
             }
           });
         }
-
     });
     //confirm password doesn't match new password
-    if (req.body.newpassword != req.body.confirmpassword){
+    if (req.body.newpassword != req.body.confirmnewpassword){
       message += "\nNew Password and Confirm Password do not match. Password not changed."
       //res.render('updateAccount', {message: message});
     }
@@ -194,7 +198,7 @@ exports.user_update_account_post = function (req, res){
         }
         else {
           db.collection("User").updateOne({username: currentUser}, 
-            {$set: {'password': req.body.newpassword}});
+            {$set: {'password': encrypted}});
         } 
       });
 
