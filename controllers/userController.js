@@ -79,17 +79,6 @@ exports.user_create_post = function (req, res){
     });     
   }  
 };
-
-// add a new user to the database from get
-exports.user_create_get = function (req, res){
-  res.send("NOT IMPLEMENTED: Create User from Get");
-};
-
-// delete a user account from post
-exports.user_delete_post = function (req, res){
-  res.send("NOT IMPLEMENTED: Delete User from POST");
-};
-
 exports.user_update_account_post = function (req, res){
   // get current user through login session cookie
   let currentUser = req.session.username;
@@ -189,3 +178,15 @@ exports.user_update_account_post = function (req, res){
   alert(message);
   res.redirect('/login');
 }
+
+
+// add a new user to the database from get
+exports.user_create_get = function (req, res){
+  res.send("NOT IMPLEMENTED: Create User from Get");
+};
+
+// delete a user account from post
+exports.user_delete_post = function (req, res){
+  res.send("NOT IMPLEMENTED: Delete User from POST");
+};
+
