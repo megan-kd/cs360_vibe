@@ -1,0 +1,37 @@
+doctype html
+html
+  head
+  body
+    div
+      h2 Change Account Info
+      h4 only enter values for the info you want to change!
+      form(action = '/updateAccount' method = 'POST')
+        h4 New First Name
+        input(name="firstname" type="text")
+        h4 New Last Name
+        input(name="lastname" type="text")
+        h4 New Email
+        input(name="email" type="text")
+        h4 New Username
+        input(name="username" type="text")
+        h4 Security Question
+        select(id="securityquestion" name="securityquestion")
+            option(value="What was the first concert you went to?") What was the first concert you went to?
+            option(value="What is your favorite song?") What is your favorite song?
+            option(value="What is your dream band name?") What is your dream band name?
+        br
+        input(name="securityanswer" type="text")
+        br
+        br
+        h3 Change Your Password
+        h4 Current Password
+        input(name="currentpassword" type="password")
+        h4 New Password
+        input(name="newpassword" type="password")
+        h4 Confirm New Password
+        input(name="confirmnewpassword" type="password")
+        br
+        input(type="submit" value="Save Changes")
+        
+
+

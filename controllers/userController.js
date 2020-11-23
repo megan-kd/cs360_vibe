@@ -4,6 +4,7 @@ var bcrypt = require("bcrypt");
 var regexPassword = new RegExp('^(?=.*[A-Za-z])(?=.*?[0-9]).{8,}$');
 
 var mongoose = require('mongoose');
+const { render } = require('pug');
 var mongoDB = "mongodb+srv://EthanHunter:emasters4e@cluster0.hkqs2.mongodb.net/vibe_project?retryWrites=true&w=majority";
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.Promise = global.Promise;
@@ -87,3 +88,34 @@ exports.user_create_get = function (req, res){
 exports.user_delete_post = function (req, res){
   res.send("NOT IMPLEMENTED: Delete User from POST");
 };
+
+exports.user_update_account_post = function (req, res){
+  // get current user through login session cookie
+  let currentUser = req.session.username;
+
+  //if first name is being changed
+  if (req.body.firstname){
+    db.collection("User").updateOne({username: currentUser}, 
+      {$set: {'firstName': req.body.firstname}});
+  }
+
+  //if last name is being changed
+  if (req.body.lastname){
+    db.collection("User").updateOne({username: currentUser}, 
+      {$set: {'lastName': req.body.lastname}});
+  }
+
+  //if email is being changed
+  if (req.body.email){
+    db.collection("User").updateOne({username: currentUser}, 
+      {$set: {'email': req.body.email}});
+  }
+
+  //if username is being changed
+
+  //if security question/answer being changed
+
+  //if changing password
+
+  res.redirect('/login');
+}
