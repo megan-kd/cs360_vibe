@@ -135,3 +135,11 @@ block content
             hr
     .vibe-footer
       a.float-right(href="#") Back to top
+
+  form(action="")
+    input(type="hidden" id="hidden_token")
+    input.trackSearch(type="text" name="track" placeholder="track name")
+  button.btnSubmit(type="submit") Search
+  ul.song-list
+  div.buttonDiv
+  script(src="client.js")
