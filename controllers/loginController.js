@@ -15,6 +15,7 @@ exports.login_authenticate_post = function (req, res) {
     message = "Oops! You forgot to enter a field.";
     res.render('login', {message:message});
   }
+  //console.log("debug_login");
   // check if there is a user that exists with that username and password
   db.collection("User").findOne({username: req.body.username, password: req.body.password},
     function(err, user){

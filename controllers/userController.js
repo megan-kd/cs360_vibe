@@ -60,7 +60,8 @@ exports.user_create_post = function (req, res){
         db.close();
         });
         
-        res.render('register', {message:"Account Created! Go ahead and login"});
+        res.redirect('/login');
+        //res.render('register', {message:"Account Created! Go ahead and login"});
         //req.session.user = newUser;
       }
     });     
