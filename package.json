@@ -8,6 +8,7 @@
     "serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart"
   },
   "dependencies": {
+    "alert": "^5.0.6",
     "bcrypt": "^5.0.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -17,6 +18,7 @@
     "http-errors": "~1.6.3",
     "mongoose": "^5.10.15",
     "morgan": "~1.9.1",
+    "popups": "^1.1.3",
     "pug": "2.0.0-beta11"
   },
   "devDependencies": {
