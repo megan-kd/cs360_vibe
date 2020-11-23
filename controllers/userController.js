@@ -154,40 +154,20 @@ exports.user_update_account_post = function (req, res){
   //changing password
   if (req.body.newpassword){
     //missing fields
-    if (!req.body.currentpassword || !req.body.confirmnewpassword){
-      message += "\nPlease enter current password and confirm new password. Password not changed."
+    if (!req.body.confirmnewpassword){
+      message += "\nPlease confirm new password. Password not changed."
       alert(message);
       res.redirect('/login');
-    
-      //res.render('updateAccount', {message: message});
     }
-    // current password doesn't match current password
-    db.collection("User").findOne({username: currentUser},
-      function(err, user){
-        if (err){
-          console.log(err)
-        }
-        if (user){
-          bcrypt.compare(req.body.newpassword, user.password, function(err, same){
-            if (!same){
-              alert("Current password is incorrect. Password not changed");
-              res.redirect('/login');
-            }
-          });
-        }
-    });
     //confirm password doesn't match new password
     if (req.body.newpassword != req.body.confirmnewpassword){
       message += "\nNew Password and Confirm Password do not match. Password not changed."
-      //res.render('updateAccount', {message: message});
     }
     //not correct password format
     else if (!regexPassword.test(req.body.newpassword)) {
       message += "\nNew password needs 8 characters including at least one" + 
                 " letter and one number! Password not changed."
-      //res.render('updateAccount', {message: message});
     }
-
     // password values are good to go
     else {
       bcrypt.hash(req.body.newpassword, 10, function(err, encrypted){
