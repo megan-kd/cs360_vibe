@@ -1,6 +1,6 @@
 //var User = require('../models/user');
 
-
+var bcrypt = require("bcrypt");
 var mongoose = require('mongoose');
 var mongoDB = "mongodb+srv://EthanHunter:emasters4e@cluster0.hkqs2.mongodb.net/vibe_project?retryWrites=true&w=majority";
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
@@ -17,22 +17,27 @@ exports.login_authenticate_post = function (req, res) {
   }
   //console.log("debug_login");
   // check if there is a user that exists with that username and password
-  db.collection("User").findOne({username: req.body.username, password: req.body.password},
+  db.collection("User").findOne({username: req.body.username},
     function(err, user){
       if (err){
         console.log(err);
       }
-      // user was found, log them in an create a session cookie
+      // user was found, check if password is correct
       else if (user){
-        var ses = req.session;
-        ses.username = req.body.username;
-        res.redirect('/');
-        message = " ";
-      }
-      else {
-        message = "Account not found. Credentials are incorrect.";
-        res.render('login', {message:message});
-        message = " ";
+        bcrypt.compare(req.body.password, user.password, function(err, same){
+          
+          if (same){
+            //log them in an create a session cookie
+            var ses = req.session;
+            ses.username = req.body.username;
+            res.redirect('/');
+          }
+          else {
+            message = "Account not found. Credentials are incorrect.";
+            res.render('login', {message:message});
+            message = " ";
+          }
+        }); 
       }
     });
 };
