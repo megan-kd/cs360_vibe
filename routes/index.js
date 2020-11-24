@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var user_controller = require('../controllers/userController');
 
 /* GET home page. */
 let current = new Date();
@@ -22,4 +23,15 @@ router.get('/', function(req, res, next) {
   
 });
 
+router.get('/updateAccount', function (req, res, next){
+  if (req.session.username){
+   
+    res.render('updateAccount');
+  }
+  else {
+    res.redirect('/login');
+  }
+});
+
+router.post('/updateAccount', user_controller.user_update_account_post);
 module.exports = router;
