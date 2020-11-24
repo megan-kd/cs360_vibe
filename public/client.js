@@ -18,23 +18,63 @@ const APIController = (function() {
     return data.access_token;
   }
 
-  const _getTracksBySearch = async (token, tracksEndPoint) => {
+  const _getTracksBySearch = async (token, tracksEndPoint, artistEndPoint) => {
    const limit = 50;
-    const result = await fetch(` https://api.spotify.com/v1/search?q=track:${tracksEndPoint}&type=track&limit=${limit}`, {
+   let dataFiltered = [];
+    const resultTracks = await fetch(` https://api.spotify.com/v1/search?q=track:${tracksEndPoint}&type=track&limit=${limit}`, {
         method: 'GET',
         headers: { 'Authorization' : 'Bearer ' + token}
     });
-    const data = await result.json();
-    return data.tracks.items;
+    const dataTracks = await resultTracks.json();
+    if (artistEndPoint) {
+    const resultArtists = await fetch(` https://api.spotify.com/v1/search?q=${artistEndPoint}&type=artist&limit=${limit}`, {
+        method: 'GET',
+        headers: { 'Authorization' : 'Bearer ' + token}
+    });
+    const dataArtists = await resultArtists.json();
+    for(let i = 0; i < 50; i++) {
+      for (let j = 0; j < dataArtists.artists.items.length; j++) {
+      if (dataTracks.tracks.items[i].artists[0].id == dataArtists.artists.items[j].id) {
+        dataFiltered[dataFiltered.length] = (dataTracks.tracks.items[i]);
+      }
+    }
+    }
+    }
+    else {
+      dataFiltered = dataTracks.tracks.items;
+    }
+    for(let i = 0; i < dataFiltered.length; i++) {
+      for(let j = 0; j < dataFiltered.length; j++) {
+        if(dataFiltered[i].artists[0].name === dataFiltered[j].artists[0].name && i != j) {
+          console.log(i);
+          console.log(j);
+            dataFiltered.splice(j, 1);
+          }
+      }
+    }
+    return dataFiltered;
 }
 
+const _getTrack = async (token, trackEndPoint) => {
+
+  const result = await fetch(`${trackEndPoint}`, {
+      method: 'GET',
+      headers: { 'Authorization' : 'Bearer ' + token}
+  });
+
+  const data = await result.json();
+  return data;
+}
 
   return {
     getToken() {
       return _getToken();
     },
-    getTracksBySearch(token, tracksEndPoint) {
-      return _getTracksBySearch(token, tracksEndPoint);
+    getTracksBySearch(token, tracksEndPoint, artist) {
+      return _getTracksBySearch(token, tracksEndPoint, artist);
+    },
+    getTrack(token, tracksEndPoint) {
+      return _getTrack(token, tracksEndPoint);
     }
   }
 })();
@@ -46,6 +86,7 @@ const UIController = (function(APICtrl) {
       divSonglist: '.song-list',
       buttonSubmit: '.btnSubmit',
       trackSearch: '.trackSearch',
+      artistSearch: '.artistSearch',
       buttonDiv: '.buttonDiv',
       buttonNext: '.next_page',
       buttonPrev: '.prev_page'
@@ -59,6 +100,7 @@ const UIController = (function(APICtrl) {
         return {
           tracks: document.querySelector(DOMElements.divSonglist),
           searchTrack: document.querySelector(DOMElements.trackSearch),
+          searchArtist: document.querySelector(DOMElements.artistSearch),
           submit: document.querySelector(DOMElements.buttonSubmit),
           next: document.querySelector(DOMElements.buttonNext),
           prev: document.querySelector(DOMElements.buttonPrev)
@@ -74,7 +116,7 @@ const UIController = (function(APICtrl) {
       document.querySelector(DOMElements.divSonglist).insertAdjacentHTML('beforeend', html);
       
     },
-    createNavButtons() {
+    createNavButtons(resultsLength) {
       const buttonNextHTML = '<button type="submit" class="next_page">Next Page</button>';
       const buttonPrevHTML = '<button type="submit" class="prev_page">Previous Page</button>';
       
@@ -87,7 +129,7 @@ const UIController = (function(APICtrl) {
         let tracksEndPoint = trackSelect.value;
         let tracks = await APICtrl.getTracksBySearch(token, tracksEndPoint);
         currentTrackPage--;
-        this.resetTracks();
+        this.resetTracks(tracks.length);
         for(let i = 0; i < 5; i++) {
           if ((i + (currentTrackPage - 1) * 5) < tracks.length) {
             this.createTrack(tracks[i + ((currentTrackPage - 1) * 5)].artists[0].name, 
@@ -104,14 +146,14 @@ const UIController = (function(APICtrl) {
       document.querySelector(DOMElements.buttonPrev).disabled = true;
     }
       document.querySelector(DOMElements.buttonDiv).insertAdjacentHTML('beforeend', buttonNextHTML);
-      if(currentTrackPage * 5 != 50) {
+      if(resultsLength > 5 && currentTrackPage * 5 != resultsLength) {
       document.querySelector(DOMElements.buttonNext).addEventListener('click', async (e) => {
         let token = this.getStoredToken().token;
         let trackSelect = this.inputField().searchTrack;
         let tracksEndPoint = trackSelect.value;
         let tracks = await APICtrl.getTracksBySearch(token, tracksEndPoint);
         currentTrackPage++;
-        this.resetTracks();
+        this.resetTracks(tracks.length);
         for(let i = 0; i < 5; i++) {
           if ((i + (currentTrackPage - 1) * 5) < tracks.length) {
             console.log(tracks[(i + (currentTrackPage - 1) * 5)]);
@@ -128,10 +170,10 @@ const UIController = (function(APICtrl) {
       document.querySelector(DOMElements.buttonNext).disabled = true;
     }
     },
-    resetTracks() {
+    resetTracks(resultsLength) {
       this.inputField().tracks.innerHTML = '';
       document.querySelector(DOMElements.buttonDiv).innerHTML = '';
-      this.createNavButtons();
+      this.createNavButtons(resultsLength);
     },
     resetTracksNoNav() {
       this.inputField().tracks.innerHTML = '';
@@ -168,15 +210,18 @@ const APPController = (function(UICtrl, APICtrl) {
   // get the playlist field
   //const playlistSelect = UICtrl.inputField().playlist;
   const trackSelect = UICtrl.inputField().searchTrack;
+  const artistSelect = UICtrl.inputField().searchArtist;
   //console.log(trackSelect);
   // get track endpoint based on the selected playlist
   // const tracksEndPoint = playlistSelect.options[playlistSelect.selectedIndex].value;
   const tracksEndPoint = trackSelect.value;
+  const artistEndPoint = artistSelect.value;
   // get the list of tracks
   //const tracks = await APICtrl.getTracks(token, tracksEndPoint);
-  const tracks = await APICtrl.getTracksBySearch(token, tracksEndPoint);
-  console.log(tracks.length);
+  const tracks = await APICtrl.getTracksBySearch(token, tracksEndPoint, artistEndPoint);
   // create a track list item
+  console.log(tracks);
+  if (tracks) {
   for(let i = 0; i < 5; i++) {
     if ((i + (currentTrackPage - 1) * 5) < tracks.length) {
       UICtrl.createTrack(tracks[i + ((currentTrackPage - 1) * 5)].artists[0].name, 
@@ -186,8 +231,42 @@ const APPController = (function(UICtrl, APICtrl) {
       i = 5;
     }
   }
-  UICtrl.createNavButtons();
+  }
+  UICtrl.createNavButtons(tracks.length);
   });
+
+  // create song selection click event listener
+  DOMInputs.tracks.addEventListener('click', async (e) => {
+    // prevent page reset
+    e.preventDefault();
+    //UICtrl.resetTrackDetail();
+    // get the token
+    const token = UICtrl.getStoredToken().token;
+    // get the track endpoint
+    const trackEndpoint = e.target.id;
+    //get the track object
+    const track = await APICtrl.getTrack(token, trackEndpoint);
+    // load the track details
+    //UICtrl.createTrackDetail(track.album.images[2].url, track.name, track.artists[0].name);
+    fetch('/addSong', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(track),
+    })
+    .then(function(response) {
+      if(response.ok) {
+        console.log('Song was Sent');
+        return;
+      }
+      throw new Error('Request failed.');
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+}); 
+
   return {
     init() {
         console.log('App is starting');
