@@ -134,12 +134,9 @@ a {
   box-shadow: 4px 4px #808080;
 }
 
-.vibe-spotify-icon {
-  margin-left: 15px;
-}
+.vibe-music-icon {
+  margin: 7px 5px 3px 15px;
 
-.fa-spotify {
-  color: #1ED761;
 }
 
 .vibe-voting-section {
@@ -198,4 +195,8 @@ hr {
 
 .vibe-footer {
   margin-bottom: 30px;
+}
+
+.fa-spotify {
+  color: #1ED761;
 }
