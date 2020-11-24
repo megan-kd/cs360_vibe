@@ -20,7 +20,6 @@ router.get('/', function(req, res, next) {
   else {
     res.redirect('/login');
   }
-  
 });
 
 router.get('/updateAccount', function (req, res, next){
