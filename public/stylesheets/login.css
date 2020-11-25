@@ -84,3 +84,8 @@
 .fa-exclamation-triangle {
   margin-left: 5px;
 }
+
+#reset-password-btn {
+  margin-top: 20px;
+  width: 100%;
+}
