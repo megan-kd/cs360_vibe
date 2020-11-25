@@ -33,4 +33,13 @@ router.get('/updateAccount', function (req, res, next){
 });
 
 router.post('/updateAccount', user_controller.user_update_account_post);
+router.get('/updateAccount/deleteAccount', function(req, res){
+  if (req.session.username){
+    user_controller.user_delete_from_get(req, res);
+  }
+  else {
+    res.redirect('/login');
+  }
+});
+
 module.exports = router;

@@ -38,6 +38,7 @@ exports.login_authenticate_post = function (req, res) {
           }
         }); 
       }
+      // if no user was found, username is incorrect.
       else {
         message = "Account not found. Credentials are incorrect.";
         res.render('login', {message:message});

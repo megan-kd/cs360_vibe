@@ -46,7 +46,8 @@ block content
       p#update-account-message #{message}
     hr.vibe-major-hr
     #delete-btn-container
-      button#delete-account-btn.btn.btn-danger(type="button") 
+      button#delete-account-btn.btn.btn-danger(type="button" onclick="confirmDelete()") 
         span Delete Account
           i.fas.fa-exclamation-triangle.fa-lg
   script(src="/scripts/resize.js")
+  script(src="/scripts/deleteAccount.js")

@@ -177,7 +177,20 @@ exports.user_update_account_post = function (req, res){
   res.render('updateAccount', {message:message});
 }
 
+// delete user from get request
+exports.user_delete_from_get = function (req, res) {
+  let currentUser = req.session.username;
+  //delete from database
+  db.collection("User").deleteOne({username: currentUser});
 
+  // destroy current session
+  req.session.destroy(function(err){
+    console.log(err);
+  });
+  alert("Account deleted!!");
+  res.redirect('/login');
+  
+}
 // add a new user to the database from get
 exports.user_create_get = function (req, res){
   res.send("NOT IMPLEMENTED: Create User from Get");
