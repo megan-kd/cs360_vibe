@@ -83,7 +83,6 @@ exports.user_update_account_post = function (req, res){
   // get current user through login session cookie
   let currentUser = req.session.username;
   var message = " ";
-  var bCanChangePassword = true;
 
   //if first name is being changed
   if (req.body.firstname){
@@ -100,7 +99,7 @@ exports.user_update_account_post = function (req, res){
   //if email is being changed
   if (req.body.email){
     if (!validator.validate(req.body.email)){
-      message += "\nEmail improper format. Email not updated.";
+      message += " Email improper format. Email not updated.";
     }
     else {
       db.collection("User").updateOne({username: currentUser}, 
@@ -119,42 +118,43 @@ exports.user_update_account_post = function (req, res){
   //credentials
   //changing username
   if (req.body.username){
+    function updateSession (){
+      req.session.username = req.body.username;
+      currentUser = req.body.username;
+      console.log(currentUser);
+      console.log(req.session.username);
+    }
     // does this username already exist?
-    db.collection("User").findOne({username: req.body.username}, function(err, user){
-      if(err){
-        console.log(err);
+    var checkUsername = db.collection("User").findOne({username: req.body.username});
+
+    checkUsername.then(user => {
+      if (user != null){
+        alert(" Someone already has this username. Username not changed. Check below for any other errors.");
       }
-      //somebody already has username, not changed
-      if (user){
-        alert("Someone already has this username. Username not changed.");
-      }
-      // change username
       else {
         db.collection("User").updateOne({username: currentUser}, 
-          {$set: {'username': req.body.username}});
-        
-          currentUser = req.body.username;
-          req.session.username = req.body.username;
+            {$set: {'username': req.body.username}});
+
+        updateSession();
       }
     });
-
+    
   }
+
   
   //changing password
   if (req.body.newpassword){
     //missing fields
     if (!req.body.confirmnewpassword){
-      message += "\nPlease confirm new password. Password not changed."
-      alert(message);
-      res.redirect('/login');
+      message += " Please confirm new password. Password not changed."
     }
     //confirm password doesn't match new password
-    if (req.body.newpassword != req.body.confirmnewpassword){
-      message += "\nNew Password and Confirm Password do not match. Password not changed."
+    else if (req.body.newpassword != req.body.confirmnewpassword){
+      message += " New Password and Confirm Password do not match. Password not changed."
     }
     //not correct password format
     else if (!regexPassword.test(req.body.newpassword)) {
-      message += "\nNew password needs 8 characters including at least one" + 
+      message += " New password needs 8 characters including at least one" + 
                 " letter and one number! Password not changed."
     }
     // password values are good to go
@@ -162,8 +162,7 @@ exports.user_update_account_post = function (req, res){
       bcrypt.hash(req.body.newpassword, 10, function(err, encrypted){
         if (err){
           console.log(err);
-          alert("Error. Password not changed.");
-          //res.render('updateAccount', {message: message});
+          alert("Server Error. Password not changed.");
         }
         else {
           db.collection("User").updateOne({username: currentUser}, 
@@ -174,9 +173,8 @@ exports.user_update_account_post = function (req, res){
     }
 
   }
-  message += "\nAll other fields updated."
-  alert(message);
-  res.redirect('/login');
+  message += "All possible fields updated."
+  res.render('updateAccount', {message:message});
 }
 
 

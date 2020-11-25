@@ -22,7 +22,7 @@ exports.login_authenticate_post = function (req, res) {
         console.log(err);
       }
       // user was found, check if password is correct
-      else if (user){
+      if (user){
         bcrypt.compare(req.body.password, user.password, function(err, same){
           
           if (same){
@@ -37,6 +37,11 @@ exports.login_authenticate_post = function (req, res) {
             message = " ";
           }
         }); 
+      }
+      else {
+        message = "Account not found. Credentials are incorrect.";
+        res.render('login', {message:message});
+        message = " ";
       }
     });
 };
