@@ -14,7 +14,7 @@ block content
   .vibe-content-section.vibe-see-through-bkgd
     h2.vibe-page-title Update Account Information
     p Only enter values for the info you want to change!
-    h3.vibe-midpage-heading Personal Info
+    h4.vibe-midpage-heading Personal Info
     form(action = '/updateAccount' method = 'POST')
       .form-group
         label New First Name
@@ -32,7 +32,7 @@ block content
             option(value="What is your favorite song?") What is your favorite song?
             option(value="What is your dream band name?") What is your dream band name?
         input.form-control(name="securityanswer" type="text")
-      h3.vibe-midpage-heading Credentials
+      h4.vibe-midpage-heading Credentials
       .form-group
         label New Username
         input.form-control(name="username" type="text")
@@ -42,7 +42,6 @@ block content
       .form-group
         label Confirm New Password
         input.form-control(name="confirmnewpassword" type="password")
-      br
       button#update-account-btn.btn.btn-outline-info(type="submit") Save Changes
       p#update-account-message #{message}
     hr.vibe-major-hr
@@ -50,3 +49,4 @@ block content
       button#delete-account-btn.btn.btn-danger(type="button") 
         span Delete Account
           i.fas.fa-exclamation-triangle.fa-lg
+  script(src="/scripts/resize.js")
