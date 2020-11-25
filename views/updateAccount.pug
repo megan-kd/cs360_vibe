@@ -32,8 +32,6 @@ block content
             option(value="What is your favorite song?") What is your favorite song?
             option(value="What is your dream band name?") What is your dream band name?
         input.form-control(name="securityanswer" type="text")
-      br
-      br
       h3.vibe-midpage-heading Credentials
       .form-group
         label New Username
@@ -46,9 +44,9 @@ block content
         input.form-control(name="confirmnewpassword" type="password")
       br
       button#update-account-btn.btn.btn-outline-info(type="submit") Save Changes
-      h1 #{message}
+      p#update-account-message #{message}
     hr.vibe-major-hr
     #delete-btn-container
       button#delete-account-btn.btn.btn-danger(type="button") 
         span Delete Account
-          i.fas.fa-exclamation-triangle.fa-2x
+          i.fas.fa-exclamation-triangle.fa-lg

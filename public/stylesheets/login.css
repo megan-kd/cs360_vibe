@@ -56,19 +56,25 @@
 }
 
 .vibe-midpage-heading {
+  margin-top: 40px;
   margin-bottom: 25px;
 }
 
 #delete-btn-container {
-  width: 100%;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 40px 5% 40px 5%;
 }
 
 #delete-account-btn {
-  display: flex;
-  align-items: center;
   border-radius: 50%;
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  max-width: 400px;
+  height: 200px;
+  margin: 0 auto;
+  display: block;
 }
 
 #delete-account-btn span {
@@ -77,5 +83,5 @@
 }
 
 .fa-exclamation-triangle {
-  margin-left: 15px;
+  margin-left: 5px;
 }
