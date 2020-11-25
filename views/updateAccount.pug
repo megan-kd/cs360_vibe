@@ -1,40 +1,54 @@
-doctype html
-html
-  head
-  body
-    h1 #{message}
-    div
-      h2 Change Account Info
-      h4 only enter values for the info you want to change!
-      form(action = '/updateAccount' method = 'POST')
-        h4 New First Name
-        input(name="firstname" type="text")
-        h4 New Last Name
-        input(name="lastname" type="text")
-        h4 New Email
-        input(name="email" type="text")
-        h4 Security Question
-        select(id="securityquestion" name="securityquestion")
+extends layout
+
+block metadata
+  link(
+    rel="stylesheet"
+    href="/stylesheets/login.css"
+  )
+  meta(
+    name="description"
+    content="Update account information page for Playlist of the Day"
+  )
+
+block content
+  .vibe-content-section.vibe-see-through-bkgd
+    h2.vibe-page-title Update Account Information
+    p Only enter values for the info you want to change!
+    h3.vibe-midpage-heading Personal Info
+    form(action = '/updateAccount' method = 'POST')
+      .form-group
+        label New First Name
+        input.form-control(name="firstname" type="text")
+      .form-group
+        label New Last Name
+        input.form-control(name="lastname" type="text")
+      .form-group
+        label New Email
+        input.form-control(name="email" type="text")
+      .form-group
+        label Security Question
+        select.form-control(id="securityquestion" name="securityquestion")
             option(value="What was the first concert you went to?") What was the first concert you went to?
             option(value="What is your favorite song?") What is your favorite song?
             option(value="What is your dream band name?") What is your dream band name?
-        br
-        input(name="securityanswer" type="text")
-        br
-        br
-        h3 Change Your Credentials
-        h4 New Username
-        input(name="username" type="text")
-
-        h4 New Password
-        input(name="newpassword" type="password")
-        h4 Confirm New Password
-        input(name="confirmnewpassword" type="password")
-        br
-        input(type="submit" value="Save Changes")
-
-      div
-        a(href="#") Delete Account!
-        
-
-
+        input.form-control(name="securityanswer" type="text")
+      br
+      br
+      h3.vibe-midpage-heading Credentials
+      .form-group
+        label New Username
+        input.form-control(name="username" type="text")
+      .form-group
+        label New Password
+        input.form-control(name="newpassword" type="password")
+      .form-group
+        label Confirm New Password
+        input.form-control(name="confirmnewpassword" type="password")
+      br
+      button#update-account-btn.btn.btn-outline-info(type="submit") Save Changes
+      h1 #{message}
+    hr.vibe-major-hr
+    #delete-btn-container
+      button#delete-account-btn.btn.btn-danger(type="button") 
+        span Delete Account
+          i.fas.fa-exclamation-triangle.fa-2x
