@@ -32,7 +32,7 @@
 
 #register-btn {
   margin-top: 20px;
-  width: 100%
+  width: 100%;
 }
 
 #securityquestion {
@@ -47,4 +47,35 @@
   color: red;
   margin-top: 30px;
   margin-bottom: 0;
+}
+
+#update-account-btn {
+  margin-top: 20px;
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.vibe-midpage-heading {
+  margin-bottom: 25px;
+}
+
+#delete-btn-container {
+  width: 100%;
+}
+
+#delete-account-btn {
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+}
+
+#delete-account-btn span {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fa-exclamation-triangle {
+  margin-left: 15px;
 }
