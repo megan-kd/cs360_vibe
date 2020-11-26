@@ -41,11 +41,7 @@ a {
   background-color: rgba(238,238, 238, 0.8);
 }
 
-.vibe-contribute-song-container {
-  display: none;
-}
-
-.vibe-contribute-song-container-heading {
+#vibe-contribute-song-container-heading {
   padding-top: 10px;
 }
 
@@ -67,11 +63,15 @@ a {
     grid-row-start: 1;
   }
 
-  .vibe-add-song-btn-container {
+  #vibe-add-song-btn-container {
     display: none;
   }
 
-  .vibe-contribute-song-container {
+  #contribute-song-hr {
+    display: none;
+  }
+
+  #vibe-contribute-song-container {
     display: block;
     position: -webkit-sticky;
     position: sticky;
@@ -194,7 +194,7 @@ hr {
 }
 
 .vibe-footer {
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 }
 
 .fa-spotify {
