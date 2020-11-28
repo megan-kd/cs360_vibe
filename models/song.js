@@ -8,8 +8,10 @@ var SongSchema = new Schema(
     Artist : {type: String},
     Album : {type: String},
     Likes : {type: Number},
-    WhoUploaded : {type: Schema.Types.ObjectId, ref: 'User'},
-    WhenUploaded : {type: Date}
+    WhoUploaded : {type: String},
+    WhenUploaded : {type: Date},
+    SongID: {type: String},
+    WhoLiked: {type: Schema.Types.ObjectId, ref: 'User'}
   }
 );
 

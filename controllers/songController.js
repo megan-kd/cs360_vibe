@@ -7,54 +7,82 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+let current = new Date();
+
+let month = current.getMonth();
+let day = current.getDate();
+let year = current.getFullYear();
+
+let date_today = month + "/" + day + "/" + year;
+var message_contents = " ";
 
 exports.store_song_get = function (req, res)
 {
-  var message = '';
   var date = new Date;
   console.log('song request recieved');
-  db.collection("Songs").findOne({Title: req.body.name}, function(err, song){
+  db.collection("Songs").findOne({Title: req.body.id}, function(err, song){
     if (err) {
       console.log(err);
     }
     else if (song) {
-    message = "Song is already on the Playlist";
+    message_contents = "Song is already on the Playlist";
     console.log('ERROR, song already exists');
-    res.render('index', {message:message});
-    message = '';
+    //res.send('This song has already been added');
+    res.redirect('/');
     }
   else {
-  db.collection("Songs").findOne({username: req.body.newusername}, function(err, user){
+  db.collection("Songs").findOne({WhoUploaded: req.session.username}, function(err, user){
   if (err) {
     console.log(err);
   }
   else if (user) {
-  message = "You can only add one song per day";
+  message_contents = "You can only add one song per day";
   console.log('ERROR, one song per day');
-  res.render('index', {message:message});
-  message = '';
+  res.redirect('/');
   }
 else {
-  var newSong = new Song({Title: req.body.name, Artist: req.body.artists[0],
-    Album: req.body.album.name, Likes: 0, WhoUploaded: req.body.user,
-    WhenUploaded: date});
+  console.log('after this');
+  console.log(req.body.artists[0]);
+  var newSong = new Song({Title: req.body.name, Artist: req.body.artists[0].name,
+    Album: req.body.album.name, Likes: 0, WhoUploaded: req.session.username,
+    WhenUploaded: date, SongID: req.body.id});
   db.collection("Songs").insertOne(newSong, function(err, res){
     if (err) throw err;
-    db.close();
+    //db.close();
   });
-  message = "Song Added";
-  res.render('index', {message:message});
+  message_contents = "Song Added";
+  res.redirect('/');
 }
 });
 }
 });
-}
-exports.song_increment_likes = function (req, res)
+};
+exports.song_change_likes = function (req, res)
 {
-  db.collection("Songs").updateOne({Title: req.body.title, Artist: req.body.artist}, {$inc: {Likes: 1}});
+  Song.updateOne({Title: req.body.title}).populate('WhoLiked').exec(function(err, list_users) {
+    if (err) {return next(err); }
+
+    console.log(list_users);
+  });
 }
 
 exports.song_decrement_likes = function (req, res)
 {
   db.collection("Songs").updateOne({Title: req.body.title, Artist: req.body.artist}, {$inc: {Likes: -1}});
 }
+
+exports.song_list = function (req, res, next) {
+
+    console.log(req.session.username);
+    if (req.session.username){
+    var cursor;
+    cursor = db.collection("Songs").find({});
+    cursor.toArray().then((data) => {
+      res.render('index', { title: 'Playlist of the Day', date: date_today, song_list: data, messege: message_contents});
+      messege = " ";
+    })
+    }
+    else {
+      res.redirect('/login');
+    }
+};
