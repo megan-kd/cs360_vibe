@@ -187,7 +187,7 @@ exports.user_delete_from_get = function (req, res) {
   req.session.destroy(function(err){
     console.log(err);
   });
-  alert("Account deleted!!");
+  alert("🥺 👉🏼👈🏼 Account deleted!!");
   res.redirect('/login');
   
 }
