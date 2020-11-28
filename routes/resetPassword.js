@@ -10,7 +10,7 @@ router.get('/', function (req, res) {
 });
 
 // POST request for creating a new user account
-router.post('/createAccount', user_controller.user_create_post);
+router.post('/', user_controller.user_reset_password_post);
 
 //spotify redirect potentially
 module.exports = router;

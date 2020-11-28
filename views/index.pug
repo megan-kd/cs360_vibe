@@ -14,14 +14,12 @@ block content
     .vibe-two-col-container
       .vibe-col-two
         p Welcome to our #{title} project! Feel free to suggest whatever song fits how you are feeling today!
-        .vibe-add-song-btn-container
-          button#vibe-add-song-btn.btn.btn-dark(type="button") 
+        #vibe-add-song-btn-container
+          button#vibe-add-song-btn.btn.btn-dark(type="button" data-toggle="collapse" data-target="#vibe-contribute-song-container") 
             i.vibe-add-song-icon.fas.fa-plus.fa-lg 
             span Add a Song
-          hr.vibe-major-hr
-        .vibe-contribute-song-container
-          h4.vibe-contribute-song-container-heading Contribute Your Song
-
+        #vibe-contribute-song-container.collapse
+          h4#vibe-contribute-song-container-heading Contribute Your Song
           form#search-form(action="")
             input(type="hidden" id="hidden_token")
             input#track-input.form-control.trackSearch(name="trackName" type="text" placeholder="Track name")
@@ -30,6 +28,7 @@ block content
               i.fas.fa-search
           ul.song-list
           div.buttonDiv
+        hr#contribute-song-hr.vibe-major-hr
             
 
       .vibe-col-one
@@ -49,5 +48,5 @@ block content
             hr
     .vibe-footer
       a.float-right(href="#") Back to top
-
   script(src="client.js")
+  script(src="/scripts/date.js")
