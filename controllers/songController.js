@@ -35,7 +35,7 @@ exports.store_song_get = function (req, res)
   message = '';
   }
 else {
-  var newSong = new Song({Title: req.body.name, Artist: req.body.artists[0],
+  var newSong = new Song({Title: req.body.name, Artist: req.body.artists[0].name,
     Album: req.body.album.name, Likes: 0, WhoUploaded: req.body.user,
     WhenUploaded: date});
   db.collection("Songs").insertOne(newSong, function(err, res){
