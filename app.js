@@ -1,3 +1,13 @@
+//**********************************************************************
+// File:				app.js
+// Author:		  Group #4
+// Date:				11/29/2020
+// Class:				Web Frameworks
+// Assignment:	Vibe Of
+// Purpose:			the express application object to set up middleware
+//              and module exports.
+//         
+//**********************************************************************
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -19,8 +29,10 @@ var app = express();
 var mongoose = require('mongoose');
 
 //API Key: Public: HEVUPWKQ Private: c2134e27-fbfa-4516-b3ec-ed6bb4af2ba8
-var mongoDB = "mongodb+srv://EthanHunter:emasters4e@cluster0.hkqs2.mongodb.net/vibe_project?retryWrites=true&w=majority";
-mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+var mongoDB = "mongodb+srv://EthanHunter:emasters4e@cluster0.hkqs2." +
+ "mongodb.net/vibe_project?retryWrites=true&w=majority";
+mongoose.connect(mongoDB, {useNewUrlParser: true,
+   useUnifiedTopology: true});
 
 var db = mongoose.connection;
 
@@ -37,7 +49,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({secret: 'doug', saveUninitialized: false, resave: false}));
+app.use(session({secret: 'doug', saveUninitialized: false,
+ resave: false}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

@@ -1,3 +1,13 @@
+//**********************************************************************
+// File:				users.js
+// Author:		  Group #4
+// Date:				11/29/2020
+// Class:				Web Frameworks
+// Assignment:	Vibe Of
+// Purpose:	
+//         
+//**********************************************************************
+
 var express = require('express');
 var router = express.Router();
 
