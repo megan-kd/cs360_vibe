@@ -46,37 +46,38 @@ Returned:    None
 
 exports.user_create_post = function (req, res){ 
   let message = " ";
+  let bAddUser = true;
   if(!req.body.confirmpassword || !req.body.newpassword 
       || !req.body.newusername || !req.body.firstname 
       || !req.body.lastname || !req.body.email || !req.body.securityanswer
       || !req.body.securityquestion) {
-    message = "Missing required field. Account not created."
-    res.render('register', {message:message});
+    message += "Missing required field. "
   } 
 
-  else if (!regexPassword.test(req.body.newpassword)) {
+  if (!regexPassword.test(req.body.newpassword)) {
 
-    message = "password needs 8 characters including at" + 
-    " least one letter and one number!";
-    res.render('register', {message:message});
+    message += "Password needs 8 characters including at" + 
+    " least one letter and one number! ";
+
+    bAddUser = false;
 
   }
-  else if (req.body.newpassword != req.body.confirmpassword){
-    message = "Passwords do not match. Account not created.";
-    res.render('register', {message:message});
+  if (req.body.newpassword != req.body.confirmpassword){
+    message += "Passwords do not match. ";
+    bAddUser = false;
   }
-  else if (!validator.validate(req.body.email)){
-    message = "Invalid email. Account not created.";
-    res.render('register', {message:message});
+  if (!validator.validate(req.body.email)){
+    message += "Invalid email. ";
+    bAddUser = false;
   }
-  else {
+  if (bAddUser == true){
     db.collection("User").findOne({username: req.body.newusername}, 
     function(err, user){
       if(err){
         console.log(err);
       }
       if (user){
-        message = "Someone already has this username. Account not created."
+        message = "Someone already has this username. Account not created.";
         res.render('register', {message:message});
       }
       else {
@@ -100,7 +101,12 @@ exports.user_create_post = function (req, res){
         res.redirect('/login');
       }
     });     
-  }  
+  }
+  else {
+    message += " Account not created."
+    res.render('register', {message:message});  
+  }
+  
 };
 
 /*************************************************************************
