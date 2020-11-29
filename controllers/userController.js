@@ -15,7 +15,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 // add a new user to the database from post
 exports.user_create_post = function (req, res){
   // if missing any credentials  
-  var message = " "
+  var message = " ";
   if(!req.body.confirmpassword || !req.body.newpassword || !req.body.newusername || 
     !req.body.firstname || !req.body.lastname || !req.body.email || !req.body.securityanswer
     || !req.body.securityquestion) {

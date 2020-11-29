@@ -48,7 +48,6 @@ else {
     WhenUploaded: date, SongID: req.body.id});
   db.collection("Songs").insertOne(newSong, function(err, res){
     if (err) throw err;
-    //db.close();
   });
   message_contents = "Song Added";
   res.redirect('/');
@@ -59,28 +58,7 @@ else {
 };
 exports.song_change_likes = function (req, res)
 {
-  /*Song.updateOne({Title: req.body.title}).populate('WhoLiked').exec(function(err, list_users) {
-    if (err) {return next(err); }
-    const found = list_users.WhoLiked.find(function (user) {
-      return user.username === req.session.username;
-    });
-    if (found) {
-      list_users.likes -= 1;
-      const index = list_users.WhoLiked.findIndex(function (user) {
-        return user.username === req.session.username;
-      });
-      list_users.WhoLiked.splice(index, 1, )
-    }
-    else {
-
-    }
-    console.log(list_users);
-  });*/
-}
-
-exports.song_decrement_likes = function (req, res)
-{
-  db.collection("Songs").updateOne({Title: req.body.title, Artist: req.body.artist}, {$inc: {Likes: -1}});
+  db.collection("Songs").updateOne({SongID: req.body.id}, {$inc: {Likes: 1}});
 }
 
 exports.song_list = function (req, res, next) {

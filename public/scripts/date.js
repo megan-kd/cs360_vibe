@@ -1,4 +1,4 @@
-let currentDateHeading = document.getElementById("current-date");
+let currentDateHeading = document.getElementByClass(".current-date");
 
 window.addEventListener("load", updateDate);
 
