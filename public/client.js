@@ -1,3 +1,13 @@
+//**********************************************************************
+// File:				client.js
+// Author:		  Group #4
+// Date:				11/29/2020
+// Class:				Web Frameworks
+// Assignment:	Vibe Of
+// Purpose:			client side functionality that interacts with the 
+//              Spotify API to search and display songs
+//         
+//**********************************************************************
 var currentTrackPage = 1;
 
 //APIController gets data from spotify API

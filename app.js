@@ -1,3 +1,13 @@
+//**********************************************************************
+// File:				app.js
+// Author:		  Group #4
+// Date:				11/29/2020
+// Class:				Web Frameworks
+// Assignment:	Vibe Of
+// Purpose:			the express application object to set up middleware
+//              and module exports.
+//         
+//**********************************************************************
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
