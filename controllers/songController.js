@@ -1,8 +1,20 @@
+//**********************************************************************
+// File:				songController.js
+// Author:		  Group #4
+// Date:				11/29/2020
+// Class:				Web Frameworks
+// Assignment:	Vibe Of
+// Purpose:			functions to access the song model when requested,
+//              return an HTML page for the user to view in the 
+//              browser
+//**********************************************************************
 var Song = require('../models/song');
 
 var mongoose = require('mongoose');
-var mongoDB = "mongodb+srv://EthanHunter:emasters4e@cluster0.hkqs2.mongodb.net/vibe_project?retryWrites=true&w=majority";
-mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+var mongoDB = "mongodb+srv://EthanHunter:emasters4e@cluster0.hkqs2." +
+ "mongodb.net/vibe_project?retryWrites=true&w=majority";
+mongoose.connect(mongoDB, {useNewUrlParser: true,
+   useUnifiedTopology: true});
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -16,6 +28,16 @@ let year = current.getFullYear();
 let date_today = month + "/" + day + "/" + year;
 var message_contents = " ";
 
+/*************************************************************************
+Function:    store_song_get
+
+Description: add a song to the database through get request
+
+Parameters:  req - request to server
+             res - response to requester in form of web page or message
+
+Returned:    None
+*************************************************************************/
 exports.store_song_get = function (req, res)
 {
   var date = new Date;
@@ -31,7 +53,8 @@ exports.store_song_get = function (req, res)
     res.redirect('/');
     }
   else {
-  db.collection("Songs").findOne({WhoUploaded: req.session.username}, function(err, user){
+  db.collection("Songs").findOne({WhoUploaded: req.session.username},
+ function(err, user){
   if (err) {
     console.log(err);
   }
@@ -57,6 +80,17 @@ else {
 }
 });
 };
+
+/*************************************************************************
+Function:    song_change_likes
+
+Description: change the number of likes a song has
+
+Parameters:  req - request to server
+             res - response to requester in form of web page or message
+
+Returned:    None
+*************************************************************************/
 exports.song_change_likes = function (req, res)
 {
   /*Song.updateOne({Title: req.body.title}).populate('WhoLiked').exec(function(err, list_users) {
@@ -78,11 +112,32 @@ exports.song_change_likes = function (req, res)
   });*/
 }
 
+/*************************************************************************
+Function:    song_decrement_likes
+
+Description: decrement the number of likes a song has
+
+Parameters:  req - request to server
+             res - response to requester in form of web page or message
+
+Returned:    None
+*************************************************************************/
 exports.song_decrement_likes = function (req, res)
 {
-  db.collection("Songs").updateOne({Title: req.body.title, Artist: req.body.artist}, {$inc: {Likes: -1}});
+  db.collection("Songs").updateOne({Title: req.body.title,
+     Artist: req.body.artist}, {$inc: {Likes: -1}});
 }
 
+/*************************************************************************
+Function:    song_list
+
+Description: return the top 15 songs for the daily playlist
+
+Parameters:  req - request to server
+             res - response to requester in form of web page or message
+
+Returned:    None
+*************************************************************************/
 exports.song_list = function (req, res, next) {
 
     console.log(req.session.username);
@@ -90,7 +145,8 @@ exports.song_list = function (req, res, next) {
     var cursor;
     cursor = db.collection("Songs").find({});
     cursor.toArray().then((data) => {
-      res.render('index', { title: 'Playlist of the Day', date: date_today, song_list: data, messege: message_contents});
+      res.render('index', { title: 'Playlist of the Day',
+       date: date_today, song_list: data, messege: message_contents});
       messege = " ";
     })
     }
