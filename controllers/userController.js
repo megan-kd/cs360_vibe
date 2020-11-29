@@ -1,6 +1,6 @@
 //**********************************************************************
 // File:				userController.js
-// Author:		  Megan DeYoung	
+// Author:		  Group #4
 // Date:				11/29/2020
 // Class:				Web Frameworks
 // Assignment:	Vibe Of
