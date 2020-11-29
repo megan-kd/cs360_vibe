@@ -1,3 +1,13 @@
+//**********************************************************************
+// File:				userController.js
+// Author:		  Group #4
+// Date:				11/29/2020
+// Class:				Web Frameworks
+// Assignment:	Vibe Of
+// Purpose:			functions to access the user model when requested,
+//              return an HTML page for the user to view in the 
+//              browser
+//**********************************************************************
 var User = require('../models/user');
 var validator = require("email-validator");
 var bcrypt = require("bcrypt");
@@ -12,38 +22,54 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-// add a new user to the database from post
-exports.user_create_post = function (req, res){
-  // if missing any credentials  
-  var message = " "
-  if(!req.body.confirmpassword || !req.body.newpassword || !req.body.newusername || 
-    !req.body.firstname || !req.body.lastname || !req.body.email || !req.body.securityanswer
-    || !req.body.securityquestion) {
+/*************************************************************************
+Function:    user_create_post
+
+Description: add a new user to the database from a request
+
+Parameters:  req - request to server
+             res - response to requester in form of web page or message
+
+POST values: newusername - the unique username for the new user
+             newpassword - the new user's password
+             confirmnewpassword - a matching password to confirm the input
+             email - user's new email
+             firstname - user's first name
+             lastname - user's last name
+             securityquestion - a prompt for the user's security question
+             securityanswer - answer to the security question
+
+Returned:    None
+*************************************************************************/
+
+exports.user_create_post = function (req, res){ 
+  let message = " ";
+  if(!req.body.confirmpassword || !req.body.newpassword 
+      || !req.body.newusername || !req.body.firstname 
+      || !req.body.lastname || !req.body.email || !req.body.securityanswer
+      || !req.body.securityquestion) {
     message = "Missing required field. Account not created."
     res.render('register', {message:message});
   } 
 
-  //incorrect password format at least 8 characters and has both letters and numbers)
   else if (!regexPassword.test(req.body.newpassword)) {
 
-    message = "password needs 8 characters including at least one letter and one number!";
+    message = "password needs 8 characters including at" + 
+    " least one letter and one number!";
     res.render('register', {message:message});
 
   }
-  // could not confirm password
   else if (req.body.newpassword != req.body.confirmpassword){
-    message = "Passwords do not match. Account not created."
+    message = "Passwords do not match. Account not created.";
     res.render('register', {message:message});
   }
-  // if email is not the correct format
   else if (!validator.validate(req.body.email)){
-    message = "Invalid email. Account not created."
+    message = "Invalid email. Account not created.";
     res.render('register', {message:message});
   }
-  // check if username already exists in database, if not add user.
   else {
-
-    db.collection("User").findOne({username: req.body.newusername}, function(err, user){
+    db.collection("User").findOne({username: req.body.newusername}, 
+    function(err, user){
       if(err){
         console.log(err);
       }
@@ -52,51 +78,63 @@ exports.user_create_post = function (req, res){
         res.render('register', {message:message});
       }
       else {
-        // encrypt password
-        // let encryptedPassWord;
         bcrypt.hash(req.body.newpassword, 10, function(err, encrypted){
           if (err){
             console.log(err);
           }
           else {
-            newUser = new User({username: req.body.newusername, password: encrypted,
-              email: req.body.email, securityQuestionPrompt: req.body.securityquestion,
-              securityQuestionAnswer: req.body.securityanswer, firstName: req.body.firstname,
-              lastName: req.body.lastname});
+            newUser = new User({username: req.body.newusername,
+              password: encrypted, email: req.body.email,
+              securityQuestionPrompt: req.body.securityquestion,
+              securityQuestionAnswer: req.body.securityanswer,
+              firstName: req.body.firstname, lastName: req.body.lastname});
     
             db.collection("User").insertOne(newUser, function(err, res) {
               if (err) throw err;
-              //db.close();
             });
-          }
-          
-          
+          } 
         });
-        
         
         res.redirect('/login');
       }
     });     
   }  
 };
-exports.user_update_account_post = function (req, res){
-  // get current user through login session cookie
-  let currentUser = req.session.username;
-  var message = " ";
 
-  //if first name is being changed
+/*************************************************************************
+Function:    user_update_account_post
+
+Description: update existing user in the database's with form data from
+             a post request by using the username stored in the login
+             session
+
+Parameters:  req - request to server
+             res - response to requester in form of web page or message
+
+POST values: newpassword - the new user's password
+             confirmpassword - a matching password to confirm the input
+             email - user's new email
+             firstName - user's first name
+             lastName - user's last name
+             securityquestion - a prompt for the user's security question
+             securityanswer - answer to the security question
+
+Returned:    None
+*************************************************************************/
+exports.user_update_account_post = function (req, res){
+  let currentUser = req.session.username;
+  let message = " ";
+
   if (req.body.firstname){
     db.collection("User").updateOne({username: currentUser}, 
       {$set: {'firstName': req.body.firstname}});
   }
 
-  //if last name is being changed
   if (req.body.lastname){
     db.collection("User").updateOne({username: currentUser}, 
       {$set: {'lastName': req.body.lastname}});
   }
 
-  //if email is being changed
   if (req.body.email){
     if (!validator.validate(req.body.email)){
       message += " Email improper format. Email not updated.";
@@ -108,15 +146,12 @@ exports.user_update_account_post = function (req, res){
     
   }
 
-   //if security question/answer being changed
   if (req.body.securityanswer){
     db.collection("User").updateOne({username: currentUser},
        {$set: {securityQuestionPrompt: req.body.securityquestion,
          securityQuestionAnswer: req.body.securityanswer}});
   }
 
-  //credentials
-  //changing username
   if (req.body.username){
     function updateSession (){
       req.session.username = req.body.username;
@@ -124,12 +159,13 @@ exports.user_update_account_post = function (req, res){
       console.log(currentUser);
       console.log(req.session.username);
     }
-    // does this username already exist?
-    var checkUsername = db.collection("User").findOne({username: req.body.username});
+    var checkUsername = db.collection("User").findOne(
+      {username: req.body.username});
 
     checkUsername.then(user => {
       if (user != null){
-        alert(" Someone already has this username. Username not changed. Check below for any other errors.");
+        alert(" Someone already has this username. Username not changed." + 
+        " Check below for any other errors.");
       }
       else {
         db.collection("User").updateOne({username: currentUser}, 
@@ -141,23 +177,18 @@ exports.user_update_account_post = function (req, res){
     
   }
 
-  
-  //changing password
   if (req.body.newpassword){
-    //missing fields
     if (!req.body.confirmnewpassword){
       message += " Please confirm new password. Password not changed."
     }
-    //confirm password doesn't match new password
     else if (req.body.newpassword != req.body.confirmnewpassword){
-      message += " New Password and Confirm Password do not match. Password not changed."
+      message += " New Password and Confirm Password do not match." +
+       " Password not changed."
     }
-    //not correct password format
     else if (!regexPassword.test(req.body.newpassword)) {
       message += " New password needs 8 characters including at least one" + 
                 " letter and one number! Password not changed."
     }
-    // password values are good to go
     else {
       bcrypt.hash(req.body.newpassword, 10, function(err, encrypted){
         if (err){
@@ -177,13 +208,20 @@ exports.user_update_account_post = function (req, res){
   res.render('updateAccount', {message:message});
 }
 
-// delete user from get request
+/*************************************************************************
+Function:    user_delete_from_get
+
+Description: delete user from the database with a get request
+
+Parameters:  req - request to server
+             res - response to requester in form of web page or message
+
+Returned:    None
+*************************************************************************/
 exports.user_delete_from_get = function (req, res) {
   let currentUser = req.session.username;
-  //delete from database
   db.collection("User").deleteOne({username: currentUser});
 
-  // destroy current session
   req.session.destroy(function(err){
     console.log(err);
   });
@@ -192,23 +230,44 @@ exports.user_delete_from_get = function (req, res) {
   
 }
 
-// validate password reset!
+/*************************************************************************
+Function:    user_reset_password_post
+
+Description: reset user's password through a post request if they forget 
+             it 
+
+Parameters:  req - request to server
+             res - response to requester in form of web page or message
+
+POST values: username - the user's username to identify who to update
+             newpassword - the new user's password
+             confirmpassword - a matching password to confirm the input
+             email - user's email to verify user
+             securityquestion - a prompt for the user's security question
+             securityanswer - answer to the security question
+
+Returned:    None
+*************************************************************************/
 exports.user_reset_password_post = function (req, res){
   function authenticateUserInfo(user){
     if (user.email != req.body.email){
-      res.render('resetPassword', {message: "Email is incorrect. Password reset failed"});
+      res.render('resetPassword', {message: "Email is incorrect." + 
+        "Password reset failed"});
     }
     else if (user.securityQuestionPrompt != req.body.securityquestion 
       || user.securityQuestionAnswer != req.body.securityanswer){
-        res.render('resetPassword', {message: "Security Question input is not correct. Password reset failed."});
+        res.render('resetPassword', {message: "Security Question input" +
+         " is not correct. Password reset failed."});
     }
     else if (!regexPassword.test(req.body.newpassword)){
-      res.render('resetPassword', {message:"New password needs to be 8 characters and include at least one letter and one number. Password reset failed."});
+      res.render('resetPassword', {message:"New password needs to be 8" +
+       " characters and include at least one letter and one number." + 
+       " Password reset failed."});
     }
     else if (req.body.newpassword != req.body.confirmpassword){
-      res.render('resetPassword', {message: "Password not confirmed. Password reset failed"});
+      res.render('resetPassword', {message: "Password not confirmed." +
+       " Password reset failed"});
     }
-    // password is good to go
     else {
       bcrypt.hash(req.body.newpassword, 10, function(err, encrypted){
         if (err){
@@ -224,14 +283,15 @@ exports.user_reset_password_post = function (req, res){
       res.redirect('/login');
     }
   }
-  let getUser = db.collection("User").findOne({username: req.body.username});
+  let getUser = db.collection("User").findOne(
+    {username: req.body.username});
 
   getUser.then(user => {
-    // user not found
     if (user == null){
-      res.render('resetPassword', {message: "User not found, username is incorrect. Password reset failed."});
+      res.render('resetPassword',
+       {message: "User not found, username is incorrect. Password reset "
+        + "failed."});
     }
-    // user is found, so authenticate other input
     else {
       authenticateUserInfo(user);
     }
