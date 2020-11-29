@@ -71,7 +71,6 @@ else {
     WhenUploaded: date, SongID: req.body.id});
   db.collection("Songs").insertOne(newSong, function(err, res){
     if (err) throw err;
-    //db.close();
   });
   message_contents = "Song Added";
   res.redirect('/');
@@ -93,6 +92,7 @@ Returned:    None
 *************************************************************************/
 exports.song_change_likes = function (req, res)
 {
+  db.collection("Songs").updateOne({SongID: req.body.id}, {$inc: {Likes: 1}});
   /*Song.updateOne({Title: req.body.title}).populate('WhoLiked').exec(function(err, list_users) {
     if (err) {return next(err); }
     const found = list_users.WhoLiked.find(function (user) {
@@ -110,22 +110,6 @@ exports.song_change_likes = function (req, res)
     }
     console.log(list_users);
   });*/
-}
-
-/*************************************************************************
-Function:    song_decrement_likes
-
-Description: decrement the number of likes a song has
-
-Parameters:  req - request to server
-             res - response to requester in form of web page or message
-
-Returned:    None
-*************************************************************************/
-exports.song_decrement_likes = function (req, res)
-{
-  db.collection("Songs").updateOne({Title: req.body.title,
-     Artist: req.body.artist}, {$inc: {Likes: -1}});
 }
 
 /*************************************************************************

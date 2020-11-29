@@ -1,3 +1,4 @@
+
 //**********************************************************************
 // File:				date.js
 // Author:		  Group #4	
@@ -8,7 +9,6 @@
 //**********************************************************************
 
 let currentDateHeading = document.getElementById("current-date");
-
 window.addEventListener("load", updateDate);
 
 function updateDate() {

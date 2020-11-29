@@ -19,8 +19,7 @@ var SongSchema = new Schema(
     Likes : {type: Number},
     WhoUploaded : {type: String},
     WhenUploaded : {type: Date},
-    SongID: {type: String},
-    WhoLiked: {type: Schema.Types.ObjectId, ref: 'User'}
+    SongID: {type: String}
   }
 );
 
