@@ -12,7 +12,8 @@ var bcrypt = require("bcrypt");
 var mongoose = require('mongoose');
 var mongoDB = "mongodb+srv://EthanHunter:emasters4e@cluster0.hkqs2." +
  "mongodb.net/vibe_project?retryWrites=true&w=majority";
-mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(mongoDB, {useNewUrlParser: true,
+   useUnifiedTopology: true});
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
