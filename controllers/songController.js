@@ -20,7 +20,7 @@ exports.store_song_get = function (req, res)
 {
   var date = new Date;
   console.log('song request recieved');
-  db.collection("Songs").findOne({Title: req.body.id}, function(err, song){
+  db.collection("Songs").findOne({SongID: req.body.id}, function(err, song){
     if (err) {
       console.log(err);
     }
@@ -59,11 +59,23 @@ else {
 };
 exports.song_change_likes = function (req, res)
 {
-  Song.updateOne({Title: req.body.title}).populate('WhoLiked').exec(function(err, list_users) {
+  /*Song.updateOne({Title: req.body.title}).populate('WhoLiked').exec(function(err, list_users) {
     if (err) {return next(err); }
+    const found = list_users.WhoLiked.find(function (user) {
+      return user.username === req.session.username;
+    });
+    if (found) {
+      list_users.likes -= 1;
+      const index = list_users.WhoLiked.findIndex(function (user) {
+        return user.username === req.session.username;
+      });
+      list_users.WhoLiked.splice(index, 1, )
+    }
+    else {
 
+    }
     console.log(list_users);
-  });
+  });*/
 }
 
 exports.song_decrement_likes = function (req, res)

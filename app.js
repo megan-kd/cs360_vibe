@@ -12,6 +12,7 @@ var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
 var resetPasswordRouter = require('./routes/resetPassword');
 var addSong = require('./routes/addSong');
+var exportPlaylist = require('./routes/exportPlaylist');
 
 var app = express();
 
@@ -44,6 +45,7 @@ app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/resetPassword', resetPasswordRouter);
 app.use('/addSong', addSong);
+app.use('/exportPlaylist', exportPlaylist);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
