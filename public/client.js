@@ -248,7 +248,7 @@ Returned:    none
     }
     document.querySelector(DOMElements.buttonDiv)
             .insertAdjacentHTML('beforeend', buttonNextHTML);
-    if(resultsLength > 5 && currentTrackPage * 5 != resultsLength) {
+    if(resultsLength > 5 && currentTrackPage * 5 <= resultsLength) {
       document.querySelector(DOMElements.buttonNext)
               .addEventListener('click', async (e) => {
         let token = this.getStoredToken().token;
@@ -485,8 +485,10 @@ const APPController = (function(UICtrl, APICtrl) {
         console.log(error);
       });
     }
-    else console.log('already voted today');
-    alert("you already voted today");
+    else  {
+      console.log('already voted today');
+      alert("you already voted today");
+  }
   }
   });
 //return the init function to setup and run everything
