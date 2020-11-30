@@ -9,7 +9,6 @@ block metadata
 block content
   .vibe-content-section.vibe-see-through-bkgd
     h1.vibe-page-title= title
-    em#add-song-error-message #{message}
     h3#current-date.vibe-page-title 
     .vibe-two-col-container
       .vibe-col-two
@@ -37,12 +36,13 @@ block content
         ol.vibe-song-list
           each Song in song_list
             li.vibe-song-list-item #{Song.Title} #{Song.Artist}
+              p Uploaded by: #{Song.WhoUploaded}
             br
             .vibe-voting-section
               button.vibe-upvote-btn.btn.btn-info(type="button") 
                 i.vibe-upvote-icon.fas.fa-thumbs-up.fa-2x
                 span Upvote
-              .vibe-votes 
+              .vibe-votes
                 b Votes
                 p.vibe-vote-count #{Song.Likes}
             hr

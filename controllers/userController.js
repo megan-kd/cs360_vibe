@@ -90,7 +90,8 @@ exports.user_create_post = function (req, res){
               password: encrypted, email: req.body.email,
               securityQuestionPrompt: req.body.securityquestion,
               securityQuestionAnswer: req.body.securityanswer,
-              firstName: req.body.firstname, lastName: req.body.lastname});
+              firstName: req.body.firstname, lastName: req.body.lastname, 
+              hasVoted: false});
     
             db.collection("User").insertOne(newUser, function(err, res) {
               if (err) throw err;

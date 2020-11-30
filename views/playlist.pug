@@ -9,21 +9,13 @@ block metadata
 block content
   .vibe-content-section.vibe-see-through-bkgd
     h1.vibe-page-title= title
-    em#add-song-error-message #{message}
-    h3.vibe-page-title= date
+    h3#current-date.vibe-page-title
     .vibe-two-col-container
       .vibe-col-one
         ol.vibe-song-list
           each Song in song_list
-            li.vibe-song-list-item #{Song.Title} #{Song.Artist}
+            li.vibe-song-list-item #{Song.Title} #{Song.Artist} | #{Song.Likes} Likes
             br
-            .vibe-voting-section
-              button.vibe-upvote-btn.btn.btn-info(type="button") 
-                i.vibe-upvote-icon.fas.fa-thumbs-up.fa-2x
-                span Upvote
-              .vibe-votes 
-                b Votes
-                p.vibe-vote-count #{Song.Likes}
-            hr
     .vibe-footer
       a.float-right(href="#") Back to top
+  script(src="/scripts/date.js")
