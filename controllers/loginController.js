@@ -50,10 +50,10 @@ exports.login_authenticate_post = function (req, res) {
             ses.username = req.body.username;
             var midnight = new Date;
             midnight.setHours(0,0,0,0);
-            //console.log(date);
-
+            console.log(user.WhenVoted);
             db.collection("Songs").deleteMany({WhenUploaded : {$lt : midnight}});
-
+            //insert something here to check user.WhenVoted is less than midnight and update
+            //WhenVoted to empty and hasVoted to false
             res.redirect('/');
           }
           else {

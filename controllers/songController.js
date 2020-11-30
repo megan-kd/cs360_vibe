@@ -19,13 +19,6 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-let current = new Date();
-let month = current.getMonth();
-let day = current.getDate();
-let year = current.getFullYear();
-
-let date_today = month + "/" + day + "/" + year;
-
 /*************************************************************************
 Function:    store_song_get
 
@@ -38,7 +31,7 @@ Returned:    None
 *************************************************************************/
 exports.store_song_get = function (req, res)
 {
-  var date = new Date;
+  let date = new Date;
   console.log('song request recieved');
   db.collection("Songs").findOne({SongID: req.body.id}, function(err, song){
     if (err) {
@@ -89,8 +82,12 @@ Returned:    None
 *************************************************************************/
 exports.song_change_likes = function (req, res)
 {
+  let date = new Date;
+
   db.collection("Songs").updateOne({WhoUploaded: req.body.WhoUploaded}, {$inc: {Likes: 1}});
-  console.log(req.keepalive);
+  db.collection("User").updateOne({username: req.session.username}, {$set: {hasVoted: true}});
+  db.collection("User").updateOne({username: req.session.username}, {$set: {whenVoted: date}});
+  console.log(req.session);
 }
 
 /*************************************************************************
@@ -104,17 +101,28 @@ Parameters:  req - request to server
 Returned:    None
 *************************************************************************/
 exports.song_list = function (req, res, next) {
-
-    console.log(req.session);
-    if (req.session.username){
-    var cursor;
-    cursor = db.collection("Songs").find({});
-    cursor.toArray().then((data) => {
-      res.render('index', { title: 'Playlist of the Day', 
-                            song_list: data});
-    })
+  console.log(req.session);
+  let hasVotedHolder;
+  db.collection("User").findOne({username: req.session.username}).then((user) => {
+    hasVotedHolder = user.hasVoted;
+  });
+  console.log(hasVotedHolder);
+  if (req.session.username){
+  var cursor;
+  cursor = db.collection("Songs").find({});
+  cursor.toArray().then((data) => {
+    if (hasVotedHolder === true || hasVotedHolder === false) {
+    res.render('index', { title: 'Playlist of the Day', 
+                          song_list: data, hasVoted: hasVotedHolder.toString()});
     }
     else {
-      res.redirect('/login');
+    //this is to fix a weird bug, easiest way to do it
+    res.render('index', { title: 'Playlist of the Day', 
+                          song_list: data, hasVoted: "true"});
     }
+  })
+  }
+  else {
+    res.redirect('/login');
+  }
 };
