@@ -17,16 +17,6 @@ var contact_controller = require('../controllers/contactController');
 /* GET home page. */
 router.get('/', song_controller.song_list);
 
-router.get('/about', function (req, res, next){
-  if (req.session.username){
-   
-    res.render('about');
-  }
-  else {
-    res.redirect('/login');
-  }
-});
-
 router.get('/contact', function (req, res, next){
   if (req.session.username){
    
