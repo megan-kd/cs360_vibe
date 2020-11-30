@@ -51,7 +51,7 @@ exports.login_authenticate_post = function (req, res) {
             var midnight = new Date;
             midnight.setHours(0,0,0,0);
 
-            midnight.setMonth(11);
+            //midnight.setMonth(11);
 
             console.log(user.WhenVoted);
             db.collection("Songs").deleteMany({WhenUploaded : {$lt : midnight}});
