@@ -36,6 +36,6 @@ router.get('/updateAccount/deleteAccount', function(req, res){
   }
 });
 
-router.get('/incrementLike', song_controller.song_change_likes);
+router.post('/incrementLike', song_controller.song_change_likes);
 
 module.exports = router;

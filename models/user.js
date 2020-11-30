@@ -25,7 +25,8 @@ var UserSchema = new Schema(
     securityQuestionAnswer : {type: String},
     email : {type: String},
     firstName: {type: String},
-    lastName: {type: String}
+    lastName: {type: String},
+    hasVoted: {type: String}
   }
 );
 

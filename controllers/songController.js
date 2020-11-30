@@ -9,7 +9,7 @@
 //              browser
 //**********************************************************************
 var Song = require('../models/song');
-
+let alert = require('alert');
 var mongoose = require('mongoose');
 var mongoDB = "mongodb+srv://EthanHunter:emasters4e@cluster0.hkqs2." +
  "mongodb.net/vibe_project?retryWrites=true&w=majority";
@@ -20,13 +20,11 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 let current = new Date();
-
 let month = current.getMonth();
 let day = current.getDate();
 let year = current.getFullYear();
 
 let date_today = month + "/" + day + "/" + year;
-var message_contents = " ";
 
 /*************************************************************************
 Function:    store_song_get
@@ -47,10 +45,9 @@ exports.store_song_get = function (req, res)
       console.log(err);
     }
     else if (song) {
-    message_contents = "Song is already on the Playlist";
     console.log('ERROR, song already exists');
-    //res.send('This song has already been added');
     res.redirect('/');
+    alert("ERROR, song already exists");
     }
   else {
   db.collection("Songs").findOne({WhoUploaded: req.session.username},
@@ -59,9 +56,9 @@ exports.store_song_get = function (req, res)
     console.log(err);
   }
   else if (user) {
-  message_contents = "You can only add one song per day";
   console.log('ERROR, one song per day');
   res.redirect('/');
+  alert("ERROR, one song per day");
   }
 else {
   console.log('after this');
@@ -72,8 +69,8 @@ else {
   db.collection("Songs").insertOne(newSong, function(err, res){
     if (err) throw err;
   });
-  message_contents = "Song Added";
   res.redirect('/');
+  alert("Song Added");
 }
 });
 }
@@ -92,24 +89,8 @@ Returned:    None
 *************************************************************************/
 exports.song_change_likes = function (req, res)
 {
-  db.collection("Songs").updateOne({SongID: req.body.id}, {$inc: {Likes: 1}});
-  /*Song.updateOne({Title: req.body.title}).populate('WhoLiked').exec(function(err, list_users) {
-    if (err) {return next(err); }
-    const found = list_users.WhoLiked.find(function (user) {
-      return user.username === req.session.username;
-    });
-    if (found) {
-      list_users.likes -= 1;
-      const index = list_users.WhoLiked.findIndex(function (user) {
-        return user.username === req.session.username;
-      });
-      list_users.WhoLiked.splice(index, 1, )
-    }
-    else {
-
-    }
-    console.log(list_users);
-  });*/
+  db.collection("Songs").updateOne({WhoUploaded: req.body.WhoUploaded}, {$inc: {Likes: 1}});
+  console.log(req.keepalive);
 }
 
 /*************************************************************************
@@ -124,14 +105,13 @@ Returned:    None
 *************************************************************************/
 exports.song_list = function (req, res, next) {
 
-    console.log(req.session.username);
+    console.log(req.session);
     if (req.session.username){
     var cursor;
     cursor = db.collection("Songs").find({});
     cursor.toArray().then((data) => {
-      res.render('index', { title: 'Playlist of the Day',
-       date: date_today, song_list: data, messege: message_contents});
-      messege = " ";
+      res.render('index', { title: 'Playlist of the Day', 
+                            song_list: data});
     })
     }
     else {
