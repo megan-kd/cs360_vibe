@@ -1,3 +1,12 @@
+//**********************************************************************
+// File:				song.js
+// Author:		  Group #4	
+// Date:				11/29/2020
+// Class:				Web Frameworks
+// Assignment:	Vibe Of
+// Purpose:			database schema for the song collection of documents
+//**********************************************************************
+
 var mongoose = require("mongoose");
 
 var Schema = mongoose.Schema;
@@ -10,8 +19,7 @@ var SongSchema = new Schema(
     Likes : {type: Number},
     WhoUploaded : {type: String},
     WhenUploaded : {type: Date},
-    SongID: {type: String},
-    WhoLiked: {type: Schema.Types.ObjectId, ref: 'User'}
+    SongID: {type: String}
   }
 );
 
