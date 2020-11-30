@@ -101,7 +101,9 @@ const UIController = (function(APICtrl) {
     artistSearch: '.artistSearch',
     buttonDiv: '.buttonDiv',
     buttonNext: '.next_page',
-    buttonPrev: '.prev_page'
+    buttonPrev: '.prev_page',
+    buttonExport: '#export-playlist-btn',
+    likeButtonWrapper: '.vibe-song-list'
   }
 
   //public methods
@@ -115,7 +117,9 @@ const UIController = (function(APICtrl) {
     searchArtist: document.querySelector(DOMElements.artistSearch),
     submit: document.querySelector(DOMElements.buttonSubmit),
     next: document.querySelector(DOMElements.buttonNext),
-    prev: document.querySelector(DOMElements.buttonPrev)
+    prev: document.querySelector(DOMElements.buttonPrev),
+    export: document.querySelector(DOMElements.buttonExport),
+    like: document.querySelector(DOMElements.likeButtonWrapper),
     }
   },
   
@@ -280,8 +284,63 @@ const APPController = (function(UICtrl, APICtrl) {
     .catch(function(error) {
       console.log(error);
     });
-    //UICtrl.resetTracksNoNav();
-}); 
+});
+
+// create listener for export button
+  DOMInputs.export.addEventListener('click', async (e) => {
+    // prevent page reset
+    e.preventDefault();
+    // get export page
+    fetch('/exportPlaylist', {
+      method: 'GET'
+    }).then (function(response) {
+      if(response.ok) {
+        console.log('Playlist was Exported');
+        window.location = '/exportPlaylist';
+        return;
+      }
+      throw new Error('Request failed.');
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+  });
+
+  //create listener for like buttons
+  DOMInputs.like.addEventListener('click', async (e) => {
+    // prevent page reset
+    e.preventDefault();
+    if (e.target.nodeName === 'BUTTON' || e.target.parentElement.nodeName === 'BUTTON') {
+    if (e.target.nodeName === 'BUTTON') {
+      var numVotes = e.target.parentElement.children[1].children[1];
+      var pElementWhoUploaded = e.target.parentElement.previousSibling.previousSibling.children[0].innerHTML;
+    }
+    else {
+      var numVotes = e.target.parentElement.parentElement.children[1].children[1];
+      var pElementWhoUploaded = e.target.parentElement.parentElement.previousSibling.previousSibling.children[0].innerHTML;
+    }
+    var whoUploaded = pElementWhoUploaded.slice(13);
+    var jsonData = {"WhoUploaded": whoUploaded};
+    numVotes.innerHTML++;
+    console.log('going into post');
+    fetch('/incrementLike', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(jsonData),
+    }).then (function(response) {
+      if(response.ok) {
+        console.log('Like was incremented');
+        return;
+      }
+      throw new Error('Request failed.');
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+  }
+  });
 //return the init function to setup and run everything
   return {
     init() {

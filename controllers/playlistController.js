@@ -9,7 +9,6 @@
 //              browser
 //**********************************************************************
 var Song = require('../models/song');
-var Playlist = require('../models/playlist');
 
 var mongoose = require('mongoose');
 var mongoDB = "mongodb+srv://EthanHunter:emasters4e@cluster0.hkqs2." +
@@ -20,45 +19,25 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-let current = new Date();
-
-let month = current.getMonth();
-let day = current.getDate();
-let year = current.getFullYear();
-
-let date_today = month + "/" + day + "/" + year;
-var message_contents = " ";
 /*************************************************************************
-Function:    store_playlist_get
+Function:    export_playlist
 
-Description: add all the songs in the export song body to a playlist
+Description: exports the top 15 songs to the playlist page to be displayed
 
 Parameters:  req - request to server
              res - response to requester in form of web page or message
 
 Returned:    None
 *************************************************************************/
-exports.store_playlist_get = function(req, res)
-{
-  var date = new Date;
-  var newPlaylist = new Playlist({Songs: res.body.songs, DateCreated: date});
-
-  db.collection('Playlists').insertOne(newPlaylist, function(err, res){
-    if (err) throw err;
-    //db.close();
-  });
-}
 
 exports.export_playlist = function(req, res) {
-  console.log(req.session.username);
+  console.log('entered correct page');
     if (req.session.username){
     var cursor;
     cursor = db.collection("Songs").find({}).sort({Likes: -1}).limit(15);
     cursor.toArray().then((data) => {
-      console.log('is right');
-      console.log(data);
-      res.render('playlist', { title: 'Playlist of the Day', date: date_today, song_list: data, messege: message_contents});
-      messege = " ";
+      res.render('playlist', { title: 'Playlist of the Day', 
+                song_list: data});
     })
     }
     else {
