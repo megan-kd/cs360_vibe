@@ -37,6 +37,8 @@ exports.login_authenticate_post = function (req, res) {
     message = "Oops! You forgot to enter a field.";
     res.render('login', {message:message});
   }
+  //console.log("debug_login");
+  // check if there is a user that exists with that username and password
   db.collection("User").findOne({username: req.body.username},
     function(err, user){
       if (err){
@@ -50,10 +52,16 @@ exports.login_authenticate_post = function (req, res) {
             ses.username = req.body.username;
             var midnight = new Date;
             midnight.setHours(0,0,0,0);
+
+            //midnight.setMonth(11);
+
             console.log(user.WhenVoted);
             db.collection("Songs").deleteMany({WhenUploaded : {$lt : midnight}});
             //insert something here to check user.WhenVoted is less than midnight and update
             //WhenVoted to empty and hasVoted to false
+            db.collection("User").updateOne({username : req.body.username}, 
+              {$set : {hasVoted : false, whenVoted : undefined}});
+
             res.redirect('/');
           }
           else {
