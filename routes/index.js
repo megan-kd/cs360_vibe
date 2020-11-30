@@ -12,9 +12,39 @@ var express = require('express');
 var router = express.Router();
 var user_controller = require('../controllers/userController');
 var song_controller = require('../controllers/songController');
+var contact_controller = require('../controllers/contactController');
 
 /* GET home page. */
 router.get('/', song_controller.song_list);
+
+router.get('/about', function (req, res, next){
+  if (req.session.username){
+   
+    res.render('about');
+  }
+  else {
+    res.redirect('/login');
+  }
+});
+
+router.get('/contact', function (req, res, next){
+  if (req.session.username){
+   
+    res.render('contact');
+  }
+  else {
+    res.redirect('/login');
+  }
+});
+
+router.post('/contact/sendQuestionsCommentsConcerns', function (req, res, next){
+  if (req.session.username){
+    contact_controller.sendQuestionsCommentsConcerns_post(req, res);
+  }
+  else {
+    res.redirect('/login');
+  }
+});
 
 router.get('/updateAccount', function (req, res, next){
   if (req.session.username){
