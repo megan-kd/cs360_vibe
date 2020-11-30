@@ -89,8 +89,8 @@ Returned:    None
 *************************************************************************/
 exports.song_change_likes = function (req, res)
 {
-  console.log(req.headers);
   db.collection("Songs").updateOne({WhoUploaded: req.body.WhoUploaded}, {$inc: {Likes: 1}});
+  console.log(req.keepalive);
 }
 
 /*************************************************************************
@@ -105,7 +105,7 @@ Returned:    None
 *************************************************************************/
 exports.song_list = function (req, res, next) {
 
-    console.log(req.session.username);
+    console.log(req.session);
     if (req.session.username){
     var cursor;
     cursor = db.collection("Songs").find({});

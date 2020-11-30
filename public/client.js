@@ -326,9 +326,10 @@ const APPController = (function(UICtrl, APICtrl) {
     fetch('/incrementLike', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(jsonData),
+      keepalive: true,
     }).then (function(response) {
       if(response.ok) {
         console.log('Like was incremented');
