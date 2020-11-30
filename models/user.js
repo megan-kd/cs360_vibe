@@ -26,7 +26,8 @@ var UserSchema = new Schema(
     email : {type: String},
     firstName: {type: String},
     lastName: {type: String},
-    hasVoted: {type: String}
+    hasVoted: {type: Boolean},
+    whenVoted: {type: Date}
   }
 );
 
