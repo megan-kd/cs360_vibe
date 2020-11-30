@@ -48,6 +48,12 @@ exports.login_authenticate_post = function (req, res) {
           if (same){
             var ses = req.session;
             ses.username = req.body.username;
+            var midnight = new Date;
+            midnight.setHours(0,0,0,0);
+            //console.log(date);
+
+            db.collection("Songs").deleteMany({WhenUploaded : {$lt : midnight}});
+
             res.redirect('/');
           }
           else {
