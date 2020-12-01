@@ -1,3 +1,12 @@
+//**********************************************************************
+// File:				contactController.js
+// Author:		  Group #4
+// Date:				11/29/2020
+// Class:				Web Frameworks
+// Assignment:	Vibe Of
+// Purpose:			functions for the contact form functionality
+//**********************************************************************
+
 let bcrypt = require('bcrypt');
 let validator = require('email-validator');
 let nodemailer = require('nodemailer');
