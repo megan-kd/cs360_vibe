@@ -200,3 +200,9 @@ hr {
 .fa-spotify {
   color: #1ED761;
 }
+
+#submit-contact-btn {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}

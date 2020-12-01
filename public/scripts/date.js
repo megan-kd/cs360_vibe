@@ -11,6 +11,16 @@
 let currentDateHeading = document.getElementById("current-date");
 window.addEventListener("load", updateDate);
 
+/*************************************************************************
+Function:    updateDate
+
+Description: updates the date heading element to match the current date
+
+Parameters:  none
+
+Returned:    none
+*************************************************************************/
+
 function updateDate() {
   let current = new Date();
   let month = current.getMonth();
