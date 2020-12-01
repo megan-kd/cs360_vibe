@@ -101,28 +101,24 @@ Parameters:  req - request to server
 Returned:    None
 *************************************************************************/
 exports.song_list = function (req, res, next) {
-  console.log(req.session);
-  let hasVotedHolder;
   db.collection("User").findOne({username: req.session.username}).then((user) => {
-    hasVotedHolder = user.hasVoted;
-  });
-  console.log(hasVotedHolder);
-  if (req.session.username){
-  var cursor;
-  cursor = db.collection("Songs").find({});
-  cursor.toArray().then((data) => {
-    if (hasVotedHolder === true || hasVotedHolder === false) {
-    res.render('index', { title: 'Playlist of the Day', 
-                          song_list: data, hasVoted: hasVotedHolder.toString()});
+    if (req.session.username){
+      var cursor;
+      cursor = db.collection("Songs").find({});
+      cursor.toArray().then((data) => {
+        if (user.hasVoted === true || user.hasVoted === false) {
+        res.render('index', { title: 'Playlist of the Day', 
+                            song_list: data, hasVoted: user.hasVoted.toString()});
+        }
+        else {
+        //this is to fix a weird bug, easiest way to do it
+        res.render('index', { title: 'Playlist of the Day', 
+                              song_list: data, hasVoted: "true"});
+        }
+      })
     }
     else {
-    //this is to fix a weird bug, easiest way to do it
-    res.render('index', { title: 'Playlist of the Day', 
-                          song_list: data, hasVoted: "true"});
+      res.redirect('/login');
     }
-  })
-  }
-  else {
-    res.redirect('/login');
-  }
+  });
 };
