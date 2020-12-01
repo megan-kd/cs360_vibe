@@ -7,9 +7,55 @@
 // Purpose:			functions for the contact form functionality
 //**********************************************************************
 
-let bcrypt = require('bcrypt');
 let validator = require('email-validator');
 let nodemailer = require('nodemailer');
+let crypto = require('crypto');
+
+/*************************************************************************
+Function:    getSentTime
+
+Description: Gets the date and time message was sent at
+
+Parameters:  None
+
+Returned:    date   - date message was sent on
+             time   - time message was sent at
+*************************************************************************/
+
+function getSentTime() {
+  const HALF_A_DAY = 12;
+  const DOUBLE_DIGITS = 10;
+  
+  let current = new Date();
+
+  let date = current.getMonth() + "/" + current.getDay() + "/" + current.getFullYear();
+  
+  let time;
+
+  let minutes = current.getMinutes();
+  if (DOUBLE_DIGITS > minutes) {
+    minutes = '0' + minutes;
+  }
+  
+  let hours = current.getHours();
+  if (HALF_A_DAY > hours) {
+    if (0 === hours) {
+      hours = HALF_A_DAY;
+    }
+    time = hours + ':' + minutes + ' AM';
+  }
+  else {
+    if (HALF_A_DAY !== hours) {
+      hours -= HALF_A_DAY;
+    }
+    time = hours + ':' + minutes + ' PM';
+  }
+
+  return {
+    date,
+    time
+  };
+}
 
 /*************************************************************************
 Function:    sendQuestionsCommentsConcerns_post
@@ -26,6 +72,12 @@ Returned:    None
 *************************************************************************/
 
 exports.sendQuestionsCommentsConcerns_post = function (req, res) {
+  const EMAIL_SERVICE = 'gmail';
+  const AUTOMATED_EMAIL = 'playlist.of.the.day.project@gmail.com';
+  const HASHED_AUTH = 'dfca554828fd764ff9e57fa180da3bce1ff262e8e7ed29dd7456c21a20cebece';
+  const RESPONDER_EMAIL = 'kata3785@pacificu.edu';
+  const ALGORITHM = 'aes-128-cbc';
+
   var message = " ";
 
   if (!req.body.email || !req.body.questionsCommentsConcerns) {
@@ -40,42 +92,17 @@ exports.sendQuestionsCommentsConcerns_post = function (req, res) {
     }
 
     else {
-      const HALF_A_DAY = 12;
-      const DOUBLE_DIGITS = 10;
-      const EMAIL_SERVICE = 'gmail';
-      const AUTOMATED_EMAIL = 'playlist.of.the.day.project@gmail.com';
-      const RESPONDER_EMAIL = 'kata3785@pacificu.edu';
-
-      let current = new Date();
-
-      let date = current.getMonth() + "/" + current.getDay() + "/" + current.getFullYear();
+      let sentTime = getSentTime();
       
-      let time;
-      
-      let minutes = current.getMinutes();
-      if (DOUBLE_DIGITS > minutes) {
-        minutes = '0' + minutes;
-      }
-      
-      let hours = current.getHours();
-      if (HALF_A_DAY > hours) {
-        if (0 === hours) {
-          hours = HALF_A_DAY;
-        }
-        time = hours + ':' + minutes + ' AM';
-      }
-      else {
-        if (HALF_A_DAY !== hours) {
-          hours -= HALF_A_DAY;
-        }
-        time = hours + ':' + minutes + ' PM';
-      }
+      let decrypt = crypto.createDecipher(ALGORITHM, 'authentication');
+      let decrypted = decrypt.update(HASHED_AUTH, 'hex', 'utf8');
+      decrypted += decrypt.final('utf8');
       
       let transport = nodemailer.createTransport({
         service: EMAIL_SERVICE,
         auth: {
           user: AUTOMATED_EMAIL,
-          pass: 'playlistoftheday'
+          pass: decrypted
         }
       });
 
@@ -94,9 +121,9 @@ exports.sendQuestionsCommentsConcerns_post = function (req, res) {
       let subjectToResponder = 'Message from ' + req.body.email;
 
       let textToResponder = '<p>You have received the following message:</p>';
-      textToResponder += '<p><b>User: </b>' + req.body.email + '</p>';
-      textToResponder += '<p><b>Date: </b>' + date + '</p>';
-      textToResponder += '<p><b>Time: </b>' + time + '</p>';
+      textToResponder += '<p><b>User email: </b>' + req.body.email + '</p>';
+      textToResponder += '<p><b>Date: </b>' + sentTime.date + '</p>';
+      textToResponder += '<p><b>Time: </b>' + sentTime.time + '</p>';
       textToResponder += '<p><b>Content: </b>' + req.body.questionsCommentsConcerns + '</p>';
 
       let mailOptionsToResponder = {
