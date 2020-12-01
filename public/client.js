@@ -485,8 +485,11 @@ const APPController = (function(UICtrl, APICtrl) {
         console.log(error);
       });
     }
-    else console.log('already voted today');
-    alert("you already voted today");
+    else 
+    {
+      console.log('already voted today');
+      alert("you already voted today");
+    }
   }
   });
 //return the init function to setup and run everything
