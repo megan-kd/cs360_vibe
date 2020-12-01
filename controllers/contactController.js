@@ -11,6 +11,20 @@ let bcrypt = require('bcrypt');
 let validator = require('email-validator');
 let nodemailer = require('nodemailer');
 
+/*************************************************************************
+Function:    sendQuestionsCommentsConcerns_post
+
+Description: Checks for validity and sends the contact form textfield 
+             message and basic message info in an email to a live person.
+             Sends a confimation email to user confirming that their 
+             message has been received.
+
+Parameters:  req - request to server
+             res - response to requester in form of web page or message
+
+Returned:    None
+*************************************************************************/
+
 exports.sendQuestionsCommentsConcerns_post = function (req, res) {
   var message = " ";
 
