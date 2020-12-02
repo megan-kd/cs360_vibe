@@ -55,6 +55,7 @@ function userCreate(firstname, lastName, Username, Password, cb){
   bcrypt.hash(Password, 10, function(err, encrypted){
     if (err){
       console.log(err);
+      return
     }
     else {
       userdetail = {
@@ -63,20 +64,21 @@ function userCreate(firstname, lastName, Username, Password, cb){
       username : Username,
       password : encrypted
       }
-    }
-  });
-  var newUser = new User(userdetail);
+      var newUser = new User(userdetail);
 
-  newUser.save(function(err)
-  {
-    if (err) {
-      cb(err, null)
-      return
+      newUser.save(function(err)
+      {
+        if (err) {
+          cb(err, null)
+          return
+        }
+        console.log("New User: " + newUser);
+        users.push(newUser)
+        cb(null, newUser);
+      });
     }
-    console.log("New User: " + newUser);
-    users.push(newUser)
-    cb(null, newUser);
   });
+ 
 
 }
 
