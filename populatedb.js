@@ -29,6 +29,7 @@ var User = [];
 function songCreate (title, artist, album, likes, whenUploaded, cb)
 {
   songdetail = {
+    _id: new mongoose.Types.ObjectId(),
     Title : title, 
     Artist : artist,
     Album : album,
@@ -59,6 +60,7 @@ function userCreate(firstname, lastName, Username, Password, cb){
     }
     else {
       userdetail = {
+      _id: new mongoose.Types.ObjectId(),
       firstName : firstname,
       lastname : lastName,
       username : Username,
