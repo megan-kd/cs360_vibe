@@ -56,7 +56,7 @@ exports.store_song_get = function (req, res)
 else {
   console.log('after this');
   console.log(req.body.artists[0]);
-  var newSong = new Song({Title: req.body.name, Artist: req.body.artists[0].name,
+  let newSong = new Song({Title: req.body.name, Artist: req.body.artists[0].name,
     Album: req.body.album.name, Likes: 0, WhoUploaded: req.session.username,
     WhenUploaded: date, SongID: req.body.id});
   db.collection("Songs").insertOne(newSong, function(err, res){
@@ -87,7 +87,6 @@ exports.song_change_likes = function (req, res)
   db.collection("Songs").updateOne({WhoUploaded: req.body.WhoUploaded}, {$inc: {Likes: 1}});
   db.collection("User").updateOne({username: req.session.username}, {$set: {hasVoted: true}});
   db.collection("User").updateOne({username: req.session.username}, {$set: {whenVoted: date}});
-  console.log(req.session);
 }
 
 /*************************************************************************
@@ -103,7 +102,7 @@ Returned:    None
 exports.song_list = function (req, res, next) {
   db.collection("User").findOne({username: req.session.username}).then((user) => {
     if (req.session.username){
-      var cursor;
+      let cursor;
       cursor = db.collection("Songs").find({});
       cursor.toArray().then((data) => {
         if (user.hasVoted === true || user.hasVoted === false) {
