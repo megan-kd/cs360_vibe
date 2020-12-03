@@ -10,12 +10,10 @@ block content
   .vibe-content-section.vibe-see-through-bkgd
     h1.vibe-page-title= title
     h3#current-date.vibe-page-title
-    .vibe-two-col-container
-      .vibe-col-one
-        ol.vibe-song-list
-          each Song in song_list
-            li.vibe-song-list-item #{Song.Title} #{Song.Artist} | #{Song.Likes} Likes
-            br
+    ol.vibe-song-list
+      each Song in song_list
+        li.vibe-song-list-item #{Song.Title} #{Song.Artist} | #{Song.Likes} Likes
+        br
     .vibe-footer
       a.float-right(href="#") Back to top
   script(src="/scripts/date.js")
