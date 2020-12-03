@@ -2,7 +2,7 @@
 
   npm install
 
-2. in order to have some data to mess around with, run the populatedb.js script by entering the following command:
+2. in order to have some data to displat and mess around with, run the populatedb.js script by entering the following command:
 
   node populatedb
 
@@ -14,7 +14,7 @@
 
 5. from here, create a new account and login.
 
-6. you will be taken to the home page where you can add one song per day, and like any songs that have already been added by other users.
+6. you will be taken to the home page where you can add one song per day, and like one song per day. 
 
 7. There is a navigation bar for logging out and changing the user information
 8. The export playlist button will take you to a page that displays the top 15 most liked songs, which is playlist of the day.
