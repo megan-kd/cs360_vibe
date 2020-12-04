@@ -1,6 +1,5 @@
 #! /usr/bin/env node
 
-console.log('This script populates some test books, authors, genres and bookinstances to your database. Specified database as argument - e.g.: populatedb mongodb+srv://cooluser:coolpassword@cluster0.a9azn.mongodb.net/local_library?retryWrites=true');
 
 // Get arguments passed on command line
 /*
@@ -30,6 +29,7 @@ function songCreate (title, artist, album, likes, whenUploaded, cb)
 {
 
   songdetail = {
+    _id: new mongoose.Types.ObjectId(),
     Title : title, 
     Artist : artist,
     Album : album,
@@ -61,6 +61,7 @@ function userCreate(firstname, lastName, Username, Password, cb){
     }
     else {
       userdetail = {
+      _id: new mongoose.Types.ObjectId(),
       firstName : firstname,
       lastname : lastName,
       username : Username,
@@ -185,6 +186,3 @@ function(err, results) {
     // All done, disconnect from database
     mongoose.connection.close();
 });
-
-
-

@@ -31,7 +31,6 @@ Returned:    None
 *************************************************************************/
 
 exports.export_playlist = function(req, res) {
-  console.log('entered correct page');
     if (req.session.username){
     var cursor;
     cursor = db.collection("Songs").find({}).sort({Likes: -1}).limit(15);

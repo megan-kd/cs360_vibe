@@ -80,7 +80,7 @@ Returned:    dataFiltered - array of track objects
     for(let i = 0; i < dataFiltered.length; i++) {
       for(let j = 0; j < dataFiltered.length; j++) {
         if(dataFiltered[i].artists[0].name === 
-           dataFiltered[j].artists[0].name && i != j) {
+           dataFiltered[j].artists[0].name && i !== j) {
           console.log(i);
           console.log(j);
             dataFiltered.splice(j, 1);
@@ -443,27 +443,28 @@ const APPController = (function(UICtrl, APICtrl) {
   DOMInputs.like.addEventListener('click', async (e) => {
     // prevent page reset
     e.preventDefault();
+    let numVotes;
+    let pElementWhoUploaded;
     if (e.target.nodeName === 'BUTTON' ||
         e.target.parentElement.nodeName === 'BUTTON') {
     if (e.target.nodeName === 'BUTTON') {
-      var numVotes = e.target
+      numVotes = e.target
                       .parentElement.children[1].children[1];
-      var pElementWhoUploaded = e.target.parentElement
+      pElementWhoUploaded = e.target.parentElement
                                  .previousSibling.previousSibling
                                  .children[0].innerHTML;
     }
     else {
-      var numVotes = e.target.parentElement.parentElement
+      numVotes = e.target.parentElement.parentElement
                       .children[1].children[1];
-      var pElementWhoUploaded = e.target.parentElement
+      pElementWhoUploaded = e.target.parentElement
                                  .parentElement.previousSibling
                                  .previousSibling.children[0]
                                  .innerHTML;
     }
-    var whoUploaded = pElementWhoUploaded.slice(13);
-    var jsonData = {"WhoUploaded": whoUploaded};
-    var hasVoted = UICtrl.getStoredHasVoted().hasVoted;
-    console.log(hasVoted);
+    let whoUploaded = pElementWhoUploaded.slice(13);
+    let jsonData = {"WhoUploaded": whoUploaded};
+    let hasVoted = UICtrl.getStoredHasVoted().hasVoted;
     if (hasVoted === "false") {
       UICtrl.setStoredHasVoted();
       numVotes.innerHTML++;
@@ -473,7 +474,6 @@ const APPController = (function(UICtrl, APICtrl) {
         'Content-Type': 'application/json'
         },
       body: JSON.stringify(jsonData),
-      keepalive: true,
       }).then (function(response) {
       if(response.ok) {
         console.log('Like was incremented');
