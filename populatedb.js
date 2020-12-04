@@ -28,11 +28,13 @@ var User = [];
 
 function songCreate (title, artist, album, likes, whenUploaded, cb)
 {
+
   songdetail = {
     Title : title, 
     Artist : artist,
     Album : album,
     Likes : likes,
+    WhoUploaded : "EHunter",
     WhenUploaded : whenUploaded
   }
 
@@ -142,25 +144,25 @@ function createSongs(cb) {
 function createUsers(cb) {
   async.series([
     function(callback) {
-      userCreate('Ethan', 'Hunter', 'EHunter', 'pword1', callback);
+      userCreate('Ethan', 'Hunter', 'EHunter', 'password1', callback);
     },
     function(callback) {
-      userCreate('Megan', 'Deyoung', 'MDeyoung', 'pword2', callback);
+      userCreate('Megan', 'Deyoung', 'MDeyoung', 'password2', callback);
     },
     function(callback) {
-      userCreate('Logan', 'Jepson', 'LJepson', 'pword3', callback);
+      userCreate('Logan', 'Jepson', 'LJepson', 'password3', callback);
     },
     function(callback) {
-      userCreate('Garret', 'Katayama', 'GKatayama', 'pword4', callback);
+      userCreate('Garret', 'Katayama', 'GKatayama', 'password4', callback);
     },
     function(callback) {
-      userCreate('Chadd', 'Williams', 'CWilliams', 'pword5', callback);
+      userCreate('Chadd', 'Williams', 'CWilliams', 'password5', callback);
     },
     function(callback) {
-      userCreate('Shereen', 'Khoja', 'SKhoja', 'pword6', callback);
+      userCreate('Shereen', 'Khoja', 'SKhoja', 'password6', callback);
     },
     function(callback) {
-      userCreate('Doug', 'Ryan', 'TheCoolestTeacher', 'dougiscool', callback);
+      userCreate('Doug', 'Ryan', 'TheCoolestTeacher', 'dougiscool63', callback);
     }
   ],
   cb)
@@ -168,8 +170,8 @@ function createUsers(cb) {
 
 
 async.series([
-  createSongs,
-  createUsers
+  createUsers,
+  createSongs
 ],
 // Optional callback
 function(err, results) {
