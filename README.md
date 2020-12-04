@@ -12,14 +12,14 @@ Make a new project and cluster for your database
 10. Go back to the ‘Overview’ tab and choose ‘Connect’
       a. Choose the ‘Add Your Current IP Address’ option
       b. Create Database User
-            i.  Exampe Username: 360User
+            i.  Example Username: 360User
             ii. Example Password:  360Pass
       c. Choose the ‘Connect your application’ option
             i. Example URL mongodb+srv://360User:360Pass@cluster0.yhpoq.mongodb.net/360Test?retryWrites=true&w=majority
       d. Press close once done
 
 Connect to MongoDB
-1.  Open up app.js, loginController.js, playlistController.js, songController.js, userController.js, populatedb.js from the cloned repository 
+1.  Open up app.js, controllers/loginController.js, controllers/playlistController.js, controllers/songController.js, controllers/userController.js, populatedb.js from the cloned repository 
 2.  Replace the current 'var mongoDB’ string with the URL from earlier
 
 
