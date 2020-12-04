@@ -2,7 +2,7 @@
 
   npm install
 
-2. in order to have some data to displat and mess around with, run the populatedb.js script by entering the following command. ONLY RUN THIS SCRIPT ONCE DAILY TO AVOID DUPLICATE DATA. The songs will delete every day.:
+2. in order to have some data to display and mess around with, run the populatedb.js script by entering the following command. ONLY RUN THIS SCRIPT ONCE DAILY TO AVOID DUPLICATE DATA. The songs will delete every day.:
 
   node populatedb
 
