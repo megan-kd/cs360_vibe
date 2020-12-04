@@ -25,14 +25,16 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 var Songs = [];
 var User = [];
 
-function songCreate (title, artist, album, likes, whenUploaded, cb)
+function songCreate (title, artist, album, likes, whenUploaded, whoUploaded, cb)
 {
+
   songdetail = {
     _id: new mongoose.Types.ObjectId(),
     Title : title, 
     Artist : artist,
     Album : album,
     Likes : likes,
+    WhoUploaded : whoUploaded,
     WhenUploaded : whenUploaded
   }
 
@@ -89,53 +91,44 @@ function createSongs(cb) {
   async.series([
     function(callback) {
       songCreate(
-        'Yell Fire!', 'Michael Franti & Spearhead', 'Yell Fire', 1, date, callback
+        'Yell Fire!', 'Michael Franti & Spearhead', 'Yell Fire', 1, date, "EHunter", callback
       );
     },
     function(callback) {
       songCreate(
-        'In The Air Tonight', 'Phil Collins', 'Face Value', 2, date, callback
+        'In The Air Tonight', 'Phil Collins', 'Face Value', 2, date, "MDeyoung", callback
       );
     },
     function(callback) {
       songCreate(
-        "Dont Bring Me Down", 'Electric Light Orchestra', 'Discovery', 3, date, callback
+        "Dont Bring Me Down", 'Electric Light Orchestra', 'Discovery', 3, date, "LJepson", callback
       );
     }, 
     function(callback) {
       songCreate(
-        'The Boxer', 'Simon & Garfunkel', 'A New Music City', 4, date, callback
+        'The Boxer', 'Simon & Garfunkel', 'A New Music City', 4, date, "GKatayama",callback
       );
     }, 
     function(callback) {
       songCreate(
-        'Sweet Dreams (Are Made of This)', 'Eurythimcs, Annie Lennox & Dave Stewart', 'RCA', 5, date, callback
+        'Sweet Dreams (Are Made of This)', 'Eurythimcs, Annie Lennox & Dave Stewart', 'RCA', 5, date, "SKhoja", callback
       );
     },
     function(callback) {
       songCreate(
-        'Spirit in The Sky', 'Norman Greenbaum', 'Spirit in The Sky', 6, date, callback
+        'Spirit in The Sky', 'Norman Greenbaum', 'Spirit in The Sky', 6, date, "CWilliams", callback
       );
     },
     function(callback) {
       songCreate(
-        'Free Bird', 'Lynyrd Skynyrd', 'Pronounced Leh-Nerd Skin-Nerd', 7, date, callback
+        'Free Bird', 'Lynyrd Skynyrd', 'Pronounced Leh-Nerd Skin-Nerd', 7, date, "TheCoolestTeacher", callback
       );
     },
     function(callback) {
       songCreate(
-        "Walkin On The Sun", "Smash Mouth", 'Fush Yu Mang', 8, date, callback
+        "Walkin On The Sun", "Smash Mouth", 'Fush Yu Mang', 8, date, "CLane", callback
       );
-    },
-    function(callback) {
-      songCreate(
-        "S.O.B", "Nathaniel Rateliff & The Night Sweats", "Nathaniel Rateliff & The Night Sweats", 9, date, callback
-      );
-    },
-    function(callback) {
-      songCreate(
-        "Cats In The Cradle", "Harry Chapin", "Varities & Balderdash", 10, date, callback      );
-    },
+    }
   ],
   cb);
 }
@@ -143,25 +136,28 @@ function createSongs(cb) {
 function createUsers(cb) {
   async.series([
     function(callback) {
-      userCreate('Ethan', 'Hunter', 'EHunter', 'pword1', callback);
+      userCreate('Ethan', 'Hunter', 'EHunter', 'password1', callback);
     },
     function(callback) {
-      userCreate('Megan', 'Deyoung', 'MDeyoung', 'pword2', callback);
+      userCreate('Megan', 'Deyoung', 'MDeyoung', 'password2', callback);
     },
     function(callback) {
-      userCreate('Logan', 'Jepson', 'LJepson', 'pword3', callback);
+      userCreate('Logan', 'Jepson', 'LJepson', 'password3', callback);
     },
     function(callback) {
-      userCreate('Garret', 'Katayama', 'GKatayama', 'pword4', callback);
+      userCreate('Garret', 'Katayama', 'GKatayama', 'password4', callback);
     },
     function(callback) {
-      userCreate('Chadd', 'Williams', 'CWilliams', 'pword5', callback);
+      userCreate('Chadd', 'Williams', 'CWilliams', 'password5', callback);
     },
     function(callback) {
-      userCreate('Shereen', 'Khoja', 'SKhoja', 'pword6', callback);
+      userCreate('Shereen', 'Khoja', 'SKhoja', 'password6', callback);
     },
     function(callback) {
-      userCreate('Doug', 'Ryan', 'TheCoolestTeacher', 'dougiscool', callback);
+      userCreate('Chris', 'Lane', 'CLane', 'password7', callback);
+    },
+    function(callback) {
+      userCreate('Doug', 'Ryan', 'TheCoolestTeacher', 'dougiscool63', callback);
     }
   ],
   cb)
@@ -169,8 +165,8 @@ function createUsers(cb) {
 
 
 async.series([
-  createSongs,
-  createUsers
+  createUsers,
+  createSongs
 ],
 // Optional callback
 function(err, results) {
